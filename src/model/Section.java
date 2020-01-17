@@ -1,34 +1,29 @@
 package model;
 
-/**
- * Représentation d'une section de voie ferrée. C'est une sous-classe de la
- * classe {@link Element}.
- *
- * @author Fabien Dagnat <fabien.dagnat@imt-atlantique.fr>
- * @author Philippe Tanguy <philippe.tanguy@imt-atlantique.fr>
- */
-public class Section extends Element {
-	private boolean isFull;
-	
-	public Section(String name) {
-		super(name);
-		isFull=false;
+public class Section extends ElementRail {
+
+	public Section(String _name) {
+		super(_name);
 	}
-	
+
 	@Override
 	public synchronized void arrive() {
-		while (isFull)
+		while( numTrainsInRail == 1 )
 			try {
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		isFull = true;
-		notifyAll();
+		System.out.println( this + " is blocked");
+		numTrainsInRail = 1;
 	}
-	
+
+	@Override
 	public synchronized void leave() {
-		isFull = false;
+		numTrainsInRail = 0;
+		System.out.println( this + " is unblocked");
 		notifyAll();
 	}
+
+
 }
