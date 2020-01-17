@@ -8,5 +8,5 @@ public class Direction {
 	}
 
 	public static final Direction LR = new Direction("LeftRight");
-
+	public static final Direction RL = new Direction("RightLeft");
 }

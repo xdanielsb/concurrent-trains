@@ -22,12 +22,7 @@ public class Train extends Thread {
 		currentPos = nxt;
 		lst.leave();
 	}
-	public void setOrigin(Station src) {
-		if( src.addTrain() ) currentPos = src;
-		else {
-			System.out.println("Is not possible to add a Train to this station");
-		}	
-	}
+
 	public void setDestiny(Station tgt) {
 		destiny = tgt;
 	}
@@ -43,5 +38,20 @@ public class Train extends Thread {
 
 	public void setDirection(Direction dir) {
 		direction = dir;
+	}
+
+	public void addTraject(Station src, Station _destiny) {
+		if( src.addTrain() ) {
+			currentPos = src;
+			destiny = _destiny;
+			if( ctrl.getIndex(src) < ctrl.getIndex(_destiny))
+				direction = Direction.LR;
+			else 
+				direction = Direction.RL;
+		}
+		else {
+			System.out.println("Is not possible to add a Train to this station");
+		}
+		
 	}
 }

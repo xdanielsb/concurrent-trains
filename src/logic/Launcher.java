@@ -20,19 +20,12 @@ public class Launcher {
 		Train t2 = new Train( "Train 2", ctrl );
 		Train t3 = new Train( "Train 3", ctrl );
 		
-		t1.setOrigin( (Station) src );
-		t2.setOrigin( (Station) src );
-		t3.setOrigin( (Station) src );
+		//Creates trajects
+		t1.addTraject( (Station) src, (Station) tgt);
+		t2.addTraject( (Station) src, (Station) tgt);
+		t3.addTraject( (Station) src, (Station) tgt);
 		
-		t1.setDestiny( (Station) tgt);
-		t2.setDestiny( (Station) tgt);
-		t3.setDestiny( (Station) tgt);
-		
-		t1.setDirection( Direction.LR);
-		t2.setDirection( Direction.LR);
-		t3.setDirection( Direction.LR);
-		
-		
+		//Init travels
 		t1.start();
 		t2.start();
 		t3.start();

@@ -15,6 +15,13 @@ public class ControlRailway {
 	public synchronized void advance( ElementRail pos) {
 	   pos.arrive();
 	}
+	
+	public int getIndex(ElementRail el) {
+		int idx = -1;
+		for( int i= 0; i < elements.length && idx==-1; i++)
+			if( el == elements[i]) idx = i;
+		return idx;
+	}
 
 	public ElementRail getNext(ElementRail currentPos, Direction dir) {
 		ElementRail res = null;
