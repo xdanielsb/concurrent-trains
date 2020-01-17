@@ -7,13 +7,24 @@ import model.Station;
 public class ControlRailway {
 	
 	private ElementRail[] elements;
+	private Direction currentDirection;
+	private int numberOfTrainsInTraject;
 	
+	public ControlRailway() {
+		numberOfTrainsInTraject = 0;
+	}
+		
+	public synchronized int getNumberOfTrainsInTraject() {
+		return numberOfTrainsInTraject;
+	}
+
+
 	public void addLine( ElementRail... els) {
 		elements = els;
 	}
 	
 	public synchronized void advance( ElementRail pos) {
-	   pos.arrive();
+	    pos.arrive();
 	}
 	
 	public int getIndex(ElementRail el) {
@@ -34,4 +45,34 @@ public class ControlRailway {
 		}
 		return res;
 	}
+
+	public Direction getCurrentDirection() {
+		return currentDirection;
+	}
+
+	public synchronized void setCurrentDirection(Direction currentDirection) {
+		System.out.println(" @@@@@@@@@ New Direction in RailWay" + currentDirection);
+		this.currentDirection = currentDirection;
+		notifyAll();
+	}
+	
+	public synchronized void incrementTrainsInTraject() {
+		numberOfTrainsInTraject++;
+	}
+	
+	public synchronized void decrementTrainsInTraject() {
+		numberOfTrainsInTraject--;
+		notifyAll();
+	}
+
+	public synchronized void isTheSameDirection(Direction direction) {
+		while( numberOfTrainsInTraject > 0  && direction != currentDirection ) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }

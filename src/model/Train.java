@@ -18,6 +18,15 @@ public class Train extends Thread {
 	public void advance() {
 		ElementRail lst = currentPos;
 		ElementRail nxt = ctrl.getNext( lst, direction);
+		ctrl.isTheSameDirection( direction);
+		if( lst instanceof Station) {
+			if( ctrl.getNumberOfTrainsInTraject() == 0) {
+				ctrl.incrementTrainsInTraject();
+				ctrl.setCurrentDirection(direction);
+			}else {
+				ctrl.incrementTrainsInTraject();
+			}
+		}
 		nxt.arrive();
 		currentPos = nxt;
 		lst.leave();
@@ -27,15 +36,6 @@ public class Train extends Thread {
 		destiny = tgt;
 	}
 	
-	@Override
-	public void run() {
-		while( currentPos != destiny) {
-			System.out.println("Current pos  "+this.name+ " = "+currentPos );
-			advance();
-		}
-		System.out.println(this.name +" Arrives ");
-	}
-
 	public void setDirection(Direction dir) {
 		direction = dir;
 	}
@@ -52,6 +52,22 @@ public class Train extends Thread {
 		else {
 			System.out.println("Is not possible to add a Train to this station");
 		}
+		
+	}
+	
+	@Override
+	public String toString() {
+		return this.name;
+	}
+	
+	@Override
+	public void run() {
+		while( currentPos != destiny) {
+			System.out.println("Current pos  "+this.name+ " = "+currentPos );
+			advance();
+		}
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~"+this.name +" Arrives ");
+		ctrl.decrementTrainsInTraject();
 		
 	}
 }
