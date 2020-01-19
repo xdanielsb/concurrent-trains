@@ -6,6 +6,11 @@ public class Section extends ElementRail {
 		super(_name);
 	}
 
+	/**
+	 * The section just can handle one train in t(s)
+	 * if there is a train, and another want wants to
+	 * go there this is block.
+	 */
 	@Override
 	public synchronized void arrive() {
 		while( numTrainsInRail == 1 )
@@ -18,12 +23,14 @@ public class Section extends ElementRail {
 		numTrainsInRail = 1;
 	}
 
+	/**
+	 * When a trains leaves the section this notify
+	 * the other that were waiting.
+	 */
 	@Override
 	public synchronized void leave() {
 		numTrainsInRail = 0;
 		System.out.println( this + " is unblocked");
 		notifyAll();
 	}
-
-
 }

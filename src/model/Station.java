@@ -2,17 +2,20 @@ package model;
 
 public class Station extends ElementRail {
 
-	private int numMaxTrainInStation;
+	private final int MAX_NUMBER_TRAIN_IN_STATION  = 3;
+
 	private int numCurrentTrainInStation;
 	public Station(String _name) {
 		super(_name);
-		numMaxTrainInStation  = 3;
 		numCurrentTrainInStation = 0;
 	}
 	
-	
+	/**
+	 * if the train want to arrive to the station and 
+	 * there is not platform to park it waits
+	 */
 	public synchronized void arrive() {
-		if( numCurrentTrainInStation == numMaxTrainInStation) {
+		if( numCurrentTrainInStation == MAX_NUMBER_TRAIN_IN_STATION) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -22,13 +25,28 @@ public class Station extends ElementRail {
 		numCurrentTrainInStation++;
 	}
 	
+	/**
+	 * if a train leaves the station this reduces the number of 
+	 * trains in the station and notify other trains that are waiting
+	 * possible, some trains that want to park in a platform of a station
+	 */
 	public synchronized void leave() {
 		numCurrentTrainInStation--;
 		notifyAll();
 	}
 
+	/**
+	 * This method is used when is configured the test of the TrainSimulator
+	 * due, is configure in code, it is neccesary a method different 
+	 * from arrive, but, increments the number of trains in the station
+	 * @return
+	 */
 	public boolean addTrain() {
-		if( numCurrentTrainInStation == numMaxTrainInStation) return false;
+		if( numCurrentTrainInStation == MAX_NUMBER_TRAIN_IN_STATION) { 
+			System.out.println("It is not possible to add another train"+
+						 	   "to the station is full");
+			return false;
+		}
 		numCurrentTrainInStation++;
 		return true;
 	}

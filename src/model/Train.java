@@ -4,10 +4,26 @@ import logic.ControlRailway;
 
 public class Train extends Thread {
 	
+	/**
+	 * Name of the train
+	 */
 	private String name;
+	/**
+	 * Current pos of the train
+	 */
 	private ElementRail currentPos;
+	/**
+	 * Destiny of the current train
+	 */
 	private ElementRail destiny;
+	/**
+	 * Direction of the current train
+	 */
 	private Direction direction;
+	/**
+	 * Monitor, that let synchronize with
+	 * other trains in the railway.
+	 */
 	private ControlRailway ctrl;
 	
 	public Train(String _name, ControlRailway _ctrl) {
@@ -15,11 +31,17 @@ public class Train extends Thread {
 		ctrl = _ctrl;
 	}
 
-	public void advance() {
+	/**
+	 * Allows a train advance in the railway.
+	 * 
+	 */
+	public void advance() { //omg
 		ElementRail lst = currentPos;
-		ElementRail nxt = ctrl.getNext( lst, direction);
+		ElementRail nxt = ctrl.getNext( currentPos, direction);
 		ctrl.isTheSameDirection( direction);
-		if( lst instanceof Station) {
+		if( currentPos instanceof Station) {
+			// this means there is no other train
+			// using the line
 			if( ctrl.getNumberOfTrainsInTraject() == 0) {
 				ctrl.incrementTrainsInTraject();
 				ctrl.setCurrentDirection(direction);
@@ -29,28 +51,43 @@ public class Train extends Thread {
 		}
 		nxt.arrive();
 		currentPos = nxt;
+		// just leaves when is possible arrive
 		lst.leave();
 	}
 
+	/**
+	 * Set the target station of a train
+	 * @param tgt
+	 */
 	public void setDestiny(Station tgt) {
 		destiny = tgt;
 	}
 	
+	/**
+	 * Set the direction of a train
+	 * @param dir
+	 */
 	public void setDirection(Direction dir) {
 		direction = dir;
 	}
 
+	/**
+	 * Set the traject of a train
+	 * @param src source of the traject
+	 * @param _destiny destiny of the traject
+	 */
 	public void addTraject(Station src, Station _destiny) {
-		if( src.addTrain() ) {
+		if( src.addTrain() ) { // is possible add another train
+							   // to that station
 			currentPos = src;
 			destiny = _destiny;
-			if( ctrl.getIndex(src) < ctrl.getIndex(_destiny))
-				direction = Direction.LR;
-			else 
-				direction = Direction.RL;
-		}
-		else {
-			System.out.println("Is not possible to add a Train to this station");
+			//find the direction in which the train
+			//have to go
+			direction = ctrl.getIndex(src) < ctrl.getIndex(_destiny)?
+				        Direction.LR : Direction.RL;
+		}else {
+			throw new IllegalStateException(
+					"Is not possible to add a Train to this station");
 		}
 		
 	}

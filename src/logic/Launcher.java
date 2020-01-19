@@ -1,6 +1,14 @@
 package logic;
-
 import model.*;
+
+/**
+ * 
+ * @author SANYAS Guillem
+ * 		   SANTOS Daniel
+ * 
+ * Launcher of the application, simulate the behaviour 
+ * of trains over a railway.
+ */
 
 public class Launcher {
 	public static void main( String[] args) {
@@ -29,6 +37,5 @@ public class Launcher {
 		t1.start();
 		t2.start();
 		t3.start();
-		
 	}
 }
