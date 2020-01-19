@@ -25,6 +25,8 @@ public class Train extends Thread {
 	 * other trains in the railway.
 	 */
 	private ControlRailway ctrl;
+	private Coordinate cord;
+	
 	
 	public Train(String _name, ControlRailway _ctrl) {
 		name = _name;
@@ -51,6 +53,7 @@ public class Train extends Thread {
 		}
 		nxt.arrive();
 		currentPos = nxt;
+		getCord().setX(nxt.getCord().getX());
 		// just leaves when is possible arrive
 		lst.leave();
 	}
@@ -85,13 +88,28 @@ public class Train extends Thread {
 			//have to go
 			direction = ctrl.getIndex(src) < ctrl.getIndex(_destiny)?
 				        Direction.LR : Direction.RL;
+			
+			cord = new Coordinate();
+			cord.setX(src.getCord().getX() + ((direction == Direction.LR)?-10:10));
+			cord.setY(src.getCord().getY() + 30 
+					+ (	src.getNumCurrentTrainInStation() + 
+						_destiny.getNumCurrentTrainInStation()
+							)*30 );
 		}else {
 			throw new IllegalStateException(
 					"Is not possible to add a Train to this station");
 		}
 		
 	}
-	
+		
+	public Coordinate getCord() {
+		return cord;
+	}
+
+	public void setCord(Coordinate cord) {
+		this.cord = cord;
+	}
+
 	@Override
 	public String toString() {
 		return this.name;
@@ -102,6 +120,12 @@ public class Train extends Thread {
 		while( currentPos != destiny) {
 			System.out.println("Current pos  "+this.name+ " = "+currentPos );
 			advance();
+			try {
+				sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			ctrl.getWindow().repaint();
 		}
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~"+this.name +" Arrives ");
 		ctrl.decrementTrainsInTraject();

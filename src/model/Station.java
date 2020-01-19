@@ -50,5 +50,11 @@ public class Station extends ElementRail {
 		numCurrentTrainInStation++;
 		return true;
 	}
+
+	public int getNumCurrentTrainInStation() {
+		return numCurrentTrainInStation;
+	}
+	
+	
 	
 }

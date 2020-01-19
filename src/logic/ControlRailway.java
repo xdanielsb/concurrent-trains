@@ -1,8 +1,11 @@
 package logic;
+import view.Window;
 import java.util.NoSuchElementException;
 
+import model.Coordinate;
 import model.Direction;
 import model.ElementRail;
+import model.Train;
 /**
  *  Monitor of the trains and the Elements of the rail
  *  {Section, Station} let synchronize the rail of trains.
@@ -13,9 +16,16 @@ public class ControlRailway {
 	private ElementRail[] elements;
 	private Direction currentDirection;
 	private int numberOfTrainsInTraject;
+	private Train[] trains;
+	
+	private Window window;
 	
 	public ControlRailway() {
 		numberOfTrainsInTraject = 0;
+	}
+	
+	public void addTrains( Train... trains) {
+		this.trains = trains;
 	}
 	
 	/**
@@ -35,6 +45,9 @@ public class ControlRailway {
 	 */
 	public void addLine( ElementRail... els) {
 		elements = els;
+		for( int i = 0; i < els.length; i++) {
+			elements[i].setCord(new Coordinate(100+i*50,100+ 30));
+		}
 	}
 	
 	/**
@@ -111,5 +124,32 @@ public class ControlRailway {
 			}
 		}
 	}
+
+	public ElementRail[] getElements() {
+		return elements;
+	}
+	
+	public int getNumElementsRail() {
+		return elements.length;
+	}
+
+	public Window getWindow() {
+		return window;
+	}
+	
+	public Train[] getTrains() {
+		return trains;
+	}
+
+	public void startSimulation() {
+		if( trains == null) {
+			System.out.println("There are no trains in the Rail");
+		}else {
+			window = new Window( this );
+			for( Train t: trains) 
+				t.start();
+		}
+	}
+
 	
 }
