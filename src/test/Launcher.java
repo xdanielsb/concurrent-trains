@@ -1,6 +1,8 @@
-package logic;
+package test;
 import javax.swing.JFrame;
 
+import logic.ControlRailway;
+import logic.Line;
 import model.*;
 
 /**
@@ -65,6 +67,9 @@ public class Launcher {
 		
 		ctrl.addTrains(t1, t2, t3, t4, t5, t6);
 		ctrl.addLines(line1, line2);
+		
+		
+		
 		
 		
 		// Create the trajects
