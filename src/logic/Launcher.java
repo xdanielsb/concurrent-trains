@@ -2,7 +2,6 @@ package logic;
 import javax.swing.JFrame;
 
 import model.*;
-import view.Window;
 
 /**
  * 
