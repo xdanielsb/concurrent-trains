@@ -5,9 +5,12 @@ public class Station extends ElementRail {
 	private final int MAX_NUMBER_TRAIN_IN_STATION  = 3;
 
 	private int numCurrentTrainInStation;
+	private int numComingTrain; // the current number in station plus the trains coming
+	
 	public Station(String _name) {
 		super(_name);
 		numCurrentTrainInStation = 0;
+		numComingTrain=0;
 	}
 	
 	/**
@@ -23,6 +26,8 @@ public class Station extends ElementRail {
 			}
 		}
 		numCurrentTrainInStation++;
+		numComingTrain--;
+		notifyAll();
 	}
 	
 	/**
@@ -54,7 +59,26 @@ public class Station extends ElementRail {
 	public int getNumCurrentTrainInStation() {
 		return numCurrentTrainInStation;
 	}
+
+	public synchronized void isPossibleGo() {
+		System.out.println(this + " Coming " + numComingTrain);
+		while (numComingTrain + numCurrentTrainInStation >= MAX_NUMBER_TRAIN_IN_STATION)
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+	}
 	
+	
+	public synchronized void incrementNumberComingTrain() {
+		numComingTrain++;
+	}
+	
+	@Override
+	public String toString() {
+		return this.name;
+	}
 	
 	
 }

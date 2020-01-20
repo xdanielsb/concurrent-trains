@@ -15,7 +15,15 @@ import view.Window;
 
 public class Launcher {
 	public static void main( String[] args) {
+		
 		ControlRailway ctrl = new ControlRailway();
+		
+		/**
+		 * 
+		 *  Line 1
+		 *   
+		 **/
+		Line line1 = new Line( 1 );
 		
 		// Create the RailWay;
 		ElementRail staA = new Station("Station A");
@@ -25,22 +33,54 @@ public class Launcher {
 		ElementRail staD = new Station("Station D");
 		
 		// Add the line to the rail
-		ctrl.addLine( staA, a, b, c, staD);
+		line1.addLine( staA, a, b, c, staD);
 		
 		// Create the trains
-		Train t1 = new Train( "Train 1", ctrl );
-		Train t2 = new Train( "Train 2", ctrl );
-		Train t3 = new Train( "Train 3", ctrl );
+		Train t1 = new Train( "Train 1", line1, ctrl );
+		Train t2 = new Train( "Train 2", line1, ctrl );
+		Train t3 = new Train( "Train 3", line1, ctrl );
 		
-		//Creates trajects for each train
-		t1.addTraject( (Station) staA, (Station) staD);
+		
+		/**
+		 * 
+		 *  Line 2
+		 *   
+		 **/	
+		
+		Line line2 = new Line(2);
+		
+		// Create the RailWay;
+		ElementRail e = new Section("DE");
+		ElementRail e2 = new Section("DE2");
+		ElementRail f = new Section("EF");
+		ElementRail staG = new Station("Station G");
+		
+		// Add the line to the rail
+		line2.addLine( staD, e,e2, f, staG);
+		
+		
+		// Create the trains
+		Train t4 = new Train( "Train 4", line2, ctrl );
+		Train t5 = new Train( "Train 5", line2, ctrl );
+		Train t6 = new Train( "Train 6", line2,  ctrl);
+		
+		ctrl.addTrains(t1, t2, t3, t4, t5, t6);
+		ctrl.addLines(line1, line2);
+		
+		
+		// Create the trajects
+
+		//Line 1
+		t1.addTraject( (Station) staA, (Station) staG);
 		t2.addTraject( (Station) staA, (Station) staD);
-		t3.addTraject( (Station) staD, (Station) staA);
+		t3.addTraject( (Station) staA, (Station) staG);
 		
-		// Add the trains to the railway
-		ctrl.addTrains(t1, t2, t3);
+		//Line 2
+		t4.addTraject( (Station) staD, (Station) staG);
+		t5.addTraject( (Station) staG, (Station) staA);
+		t6.addTraject( (Station) staG, (Station) staA);
 		
-		//Init Simulation
+		
 		ctrl.startSimulation();
 		
 	}

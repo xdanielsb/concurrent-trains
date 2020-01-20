@@ -1,6 +1,7 @@
 package model;
 
 import logic.ControlRailway;
+import logic.Line;
 
 public class Train extends Thread {
 	
@@ -13,6 +14,10 @@ public class Train extends Thread {
 	 */
 	private ElementRail currentPos;
 	/**
+	 * Initial origin train
+	 */
+	private ElementRail origin;
+	/**
 	 * Destiny of the current train
 	 */
 	private ElementRail destiny;
@@ -24,13 +29,18 @@ public class Train extends Thread {
 	 * Monitor, that let synchronize with
 	 * other trains in the railway.
 	 */
-	private ControlRailway ctrl;
+	private Line currentLine;
 	private Coordinate cord;
 	
+	private ControlRailway ctrl;
 	
-	public Train(String _name, ControlRailway _ctrl) {
+	
+	
+	public Train(String _name, Line line,ControlRailway control) {
 		name = _name;
-		ctrl = _ctrl;
+		currentLine = line;
+		ctrl = control;
+		cord = new Coordinate();
 	}
 
 	/**
@@ -39,19 +49,34 @@ public class Train extends Thread {
 	 */
 	public void advance() { //omg
 		ElementRail lst = currentPos;
-		ElementRail nxt = ctrl.getNext( currentPos, direction);
-		ctrl.isTheSameDirection( direction);
+
+		if (currentPos != origin && currentPos instanceof Station) {
+			System.out.println("Change of line of the Train: " + this);
+			currentLine.decrementTrainsInTraject();
+			currentLine = ctrl.getNextLine( currentLine, direction);
+		}
+		if (currentPos instanceof Station) {
+			Station st;	
+			st = currentLine.nextStation(currentPos);
+			st.isPossibleGo();
+			st.incrementNumberComingTrain();
+		}
+		ElementRail nxt = currentLine.getNext( currentPos, direction);
+		currentLine.isTheSameDirection( direction);
 		if( currentPos instanceof Station) {
-			// this means there is no other train
-			// using the line
-			if( ctrl.getNumberOfTrainsInTraject() == 0) {
-				ctrl.incrementTrainsInTraject();
-				ctrl.setCurrentDirection(direction);
+			if( currentLine.getNumberOfTrainsInTraject() == 0) {
+				// this means there is no other train
+				// using the line
+				
+				currentLine.incrementTrainsInTraject();
+				
+				currentLine.setCurrentDirection(direction);
 			}else {
-				ctrl.incrementTrainsInTraject();
+				currentLine.incrementTrainsInTraject();
 			}
 		}
 		nxt.arrive();
+
 		currentPos = nxt;
 		getCord().setX(nxt.getCord().getX());
 		// just leaves when is possible arrive
@@ -83,18 +108,14 @@ public class Train extends Thread {
 		if( src.addTrain() ) { // is possible add another train
 							   // to that station
 			currentPos = src;
+			origin = src;
 			destiny = _destiny;
 			//find the direction in which the train
 			//have to go
 			direction = ctrl.getIndex(src) < ctrl.getIndex(_destiny)?
 				        Direction.LR : Direction.RL;
-			
-			cord = new Coordinate();
-			cord.setX(src.getCord().getX() + ((direction == Direction.LR)?-10:10));
-			cord.setY(src.getCord().getY() + 30 
-					+ (	src.getNumCurrentTrainInStation() + 
-						_destiny.getNumCurrentTrainInStation()
-							)*30 );
+			cord.setX(src.getCord().getX());
+			System.out.println(src +" to "+ _destiny + " dir= " + direction);
 		}else {
 			throw new IllegalStateException(
 					"Is not possible to add a Train to this station");
@@ -128,7 +149,7 @@ public class Train extends Thread {
 			ctrl.getWindow().repaint();
 		}
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~"+this.name +" Arrives ");
-		ctrl.decrementTrainsInTraject();
+		currentLine.decrementTrainsInTraject();
 		
 	}
 }

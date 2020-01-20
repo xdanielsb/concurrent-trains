@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import logic.ControlRailway;
+import logic.Line;
 import model.ElementRail;
 import model.Station;
 import model.Train;
@@ -21,7 +22,8 @@ public class Canvas extends JPanel {
 		super.paintComponent(g);
 		
 		// Stations and Sections
-		for( ElementRail el: ctrl.getElements()) {
+		for (Line l : ctrl.getLines())
+		for( ElementRail el: l.getElements()) {
 			if( el instanceof Station) {
 				g.setColor(Color.BLUE);
 				g.fillOval(el.getCord().getX(), 
@@ -39,6 +41,7 @@ public class Canvas extends JPanel {
 		
 		// Trains
 		
+		for (Line l : ctrl.getLines())
 		for( Train el: ctrl.getTrains()) {
 			g.setColor(Color.cyan);
 			g.fillRect(el.getCord().getX(), 

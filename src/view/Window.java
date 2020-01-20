@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 import logic.ControlRailway;
+import logic.Line;
 import model.ElementRail;
 
 @SuppressWarnings("serial")
@@ -21,7 +22,10 @@ public class Window extends JFrame {
 		setVisible( true );
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Canvas cv = new Canvas(ctrl);
-		int length = ctrl.getNumElementsRail();
+		int length = 0;
+		for (Line l : ctrl.getLines()) {
+			length += l.getNumElementsRail();
+		}
 		setSize(length*50+ 190, 400);
 		add( cv );
 	}

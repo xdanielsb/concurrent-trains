@@ -11,6 +11,7 @@ public abstract class ElementRail {
 	public ElementRail( String _name) {
 		name = _name;
 		numTrainsInRail = 0;
+		cord = new Coordinate(100, 130);
 	}
 	/**
 	 * if the method is fully executed
