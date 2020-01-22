@@ -14,7 +14,7 @@ import model.*;
  * of trains over a railway.
  */
 
-public class Launcher {
+public class TestThreeStations {
 	public static void main( String[] args) {
 		
 		ControlRailway ctrl = new ControlRailway();

@@ -7,7 +7,7 @@ import model.Section;
 import model.Station;
 import model.Train;
 
-public class Test1 {
+public class TestFourStations {
 
 	public static void main(String[] args) {
 		
