@@ -136,6 +136,10 @@ public class Train extends Thread {
 		return this.name;
 	}
 	
+	public Direction getDirection() {
+		return this.direction;
+	}
+	
 	@Override
 	public void run() {
 		while( currentPos != destiny) {

@@ -49,8 +49,10 @@ public class ControlRailway {
 			if( i == 0 && el[0] == src) ans =i;
 			if( el[ el.length - 1] == src) ans =i+1 ;
 		}
-		//System.out.println( src  + " at " + ans );
 		return ans;
+	}
+	public int getNumberTrains() {
+		return trains.length;
 	}
 	public Train[] getTrains() {
 		return trains;
