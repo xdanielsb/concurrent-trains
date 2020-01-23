@@ -47,8 +47,11 @@ public class Canvas extends JComponent {
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-
-	    
+		paintElementsRail( g );
+		paintTrains( g );
+	}
+	
+	public void paintElementsRail( Graphics g ) {
 		// Stations and Sections
 		for (Line l : ctrl.getLines())
 		for( ElementRail el: l.getElements()) {
@@ -58,19 +61,16 @@ public class Canvas extends JComponent {
 				g.drawImage(trainRail, el.getCord().getX(), el.getCord().getY(),40,40,null);
 			}
 		}
-		
-		// Trains
-		
+	}
+	
+	public void paintTrains( Graphics g ) {
 		for (Line l : ctrl.getLines())
 		for( Train el: ctrl.getTrains()) {
-			g.setColor(Color.cyan);
 			if( el.getDirection() == Direction.LR) {
 				g.drawImage(trainLeft, el.getCord().getX(), el.getCord().getY(),40,40,null);
 			}else {
 				g.drawImage(trainRight, el.getCord().getX(), el.getCord().getY(),40,40,null);
 			}
 		}
-		
-		
 	}
 }
