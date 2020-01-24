@@ -55,6 +55,10 @@ public class Station extends ElementRail {
 		numCurrentTrainInStation++;
 		return true;
 	}
+	
+	public boolean isPossibleAddAnotherTrain() {
+		return numCurrentTrainInStation < MAX_NUMBER_TRAIN_IN_STATION;
+	}
 
 	public int getNumCurrentTrainInStation() {
 		return numCurrentTrainInStation;
@@ -78,6 +82,10 @@ public class Station extends ElementRail {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+
+	public void incrementNumberCurrentTrain() {
+		numCurrentTrainInStation++;
 	}
 	
 	

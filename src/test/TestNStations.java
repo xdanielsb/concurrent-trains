@@ -14,31 +14,48 @@ public class TestNStations {
 	
 	private int nStations;
 	private int nTrains;
-	private List<Line> lines = new ArrayList<Line>();
+	private ArrayList<Line> lines = new ArrayList<Line>();
+	private ArrayList<Train> trains = new ArrayList<Train>();
+	ArrayList< Station > listStations = new ArrayList();
+	ArrayList< Section > listSection = new ArrayList();
+	ControlRailway ctrl = new ControlRailway();
 	
 	public TestNStations(int nStations, int nTrains) {
 		this.nStations = nStations;
 		this.nTrains = nTrains;
 	}
-	
-	public Station getFreeStation( int rnd) {
-		for( int i= rnd; i< (rnd-1+lines.size())%lines.size(); i++) {
-			if( lines.get(i).getStart().getNumCurrentTrainInStation() < Station.MAX_NUMBER_TRAIN_IN_STATION )
-				return lines.get(i).getStart();
-			if( lines.get(i).getEnd().getNumCurrentTrainInStation() < Station.MAX_NUMBER_TRAIN_IN_STATION )
-				return lines.get(i).getEnd();
+
+	public Train createTrain( int rnd, int id) {
+		Line l = null; 
+		Station start = null, end= null;
+		boolean flag = true;
+		for( int i= 0; i < lines.size() && flag; i++) {
+			l = lines.get((rnd+i)%lines.size());
+			if( l.getStart().isPossibleAddAnotherTrain()) {
+				start = l.getStart(); flag = false;
+			}else if( l.getEnd().isPossibleAddAnotherTrain()) {
+				start = l.getEnd(); flag = false;
+			}
+		}
 		
-		return null;
+		rnd = (int) (Math.random()*(listStations.size()));
+		flag = true;
+		for( int i= 0; i < listStations.size() && flag; i++) {
+			end = listStations.get((i+rnd)%listStations.size()); 
+			if(end.toString() != start.toString()) {
+				flag = false;
+			}
+		}
+		Train t = new Train("Train "+id, l, ctrl);
+		t.setOrigin(start);
+		t.setDestiny(end);
+		return t;
 	}
 	
 	public void start() {
-		ControlRailway ctrl = new ControlRailway();
-		ArrayList< Station > listStations = new ArrayList();
-		ArrayList< Section > listSection = new ArrayList();
-		for( int  i = 1 ; i<= nStations; i++) {
+		for( int  i = 1 ; i<= nStations; i++) 
 			listStations.add( new Station("A"+i));
-		}
-		ArrayList< Line> listLines = new ArrayList();
+		
 		int numSections = 0;
 		for( int i= 0; i< nStations-1; i++) {
 			ArrayList< ElementRail > elements = new ArrayList();
@@ -49,22 +66,37 @@ public class TestNStations {
 			elements.add(listStations.get(i+1));
 			
 			Line l1 = new Line(i);
-			l1.addLine((ElementRail[]) elements.toArray());
+			ElementRail[] aux = new ElementRail[elements.size()];
+			for( int k= 0; k < elements.size();k++)
+				aux[k] = elements.get(k);
+			l1.addLine(aux);
 			lines.add(l1);
 		}
-		for( int i = 0; i< nStations-1; i++) 
-			ctrl.addLines((Line[]) listLines.toArray());
-		ArrayList<Train > trains = new ArrayList();
+		
+
+		Train[] auxTrains = new Train[nTrains];
 		for( int i= 0; i < nTrains; i++) {
-			int randomLine = (int) (Math.random()*listLines.size());
-			int randomLine2 = (int) (Math.random()*listLines.size());
-			Station start = getFreeStation( randomLine2);
-			trains.add( new Train("Train"+(i+1), listLines.get(randomLine) , ctrl));
-			trains.get(i).addTraject(
-					listLines.get(randomLine).getStart(), 
-					_destiny);
+			int rnd  = (int) (Math.random()*lines.size());
+			auxTrains[i] = createTrain( rnd, i+1); 
+		}
+		ctrl.addTrains(auxTrains);
+		
+		
+		Line[] auxLines = new  Line[lines.size()];
+		for( int k= 0; k < lines.size(); k++)
+			auxLines[ k ]= lines.get( k );
+		ctrl.addLines( auxLines );
+		
+		for( Train t : auxTrains) {
+			t.addTraject(t.getOrigin(), t.getDestiny());
 		}
 		
+		ctrl.createWindow();
+	}
+	
+	public static void main( String[] args) {
+		TestNStations t = new TestNStations( 6, 7);
+		t.start();
 	}
 
 }

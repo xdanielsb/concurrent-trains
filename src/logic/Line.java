@@ -67,7 +67,12 @@ public class Line {
 		ElementRail res = null;
 		for( int i = 0; i < elements.length && res == null; i++)
 			if( elements[i] == currentPos) {
-				res = dir == Direction.LR ? elements[i+1]: elements[i-1];
+				try {
+					res = dir == Direction.LR ? elements[i+1]: elements[i-1];
+				}catch ( ArrayIndexOutOfBoundsException excep) {
+					System.out.println("##################Exception " + currentPos + " " + dir);
+					throw new ArrayIndexOutOfBoundsException();
+				}
 			}
 		if( res == null) {
 			System.out.println( currentPos  + " " + dir + " NOT FOUND at "+this);

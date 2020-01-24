@@ -16,11 +16,11 @@ public class Train extends Thread {
 	/**
 	 * Initial origin train
 	 */
-	private ElementRail origin;
+	private Station origin;
 	/**
 	 * Destiny of the current train
 	 */
-	private ElementRail destiny;
+	private Station destiny;
 	/**
 	 * Direction of the current train
 	 */
@@ -50,7 +50,8 @@ public class Train extends Thread {
 	public void advance() { //omg
 		ElementRail lst = currentPos;
 
-		if (currentPos != origin && currentPos instanceof Station) {
+		if (currentPos == getOrigin() && direction == Direction.RL ||
+			currentPos == getDestiny() && direction == Direction.LR) {
 			System.out.println("Change of line of the Train: " + this);
 			currentLine.decrementTrainsInTraject();
 			currentLine = ctrl.getNextLine( currentLine, direction);
@@ -99,11 +100,11 @@ public class Train extends Thread {
 		direction = dir;
 	}
 	
-	public ElementRail getOrigin() {
+	public Station getOrigin() {
 		return origin;
 	}
 
-	public ElementRail getDestiny() {
+	public Station getDestiny() {
 		return destiny;
 	}
 
@@ -113,26 +114,24 @@ public class Train extends Thread {
 	 * @param _destiny destiny of the traject
 	 */
 	public void addTraject(Station src, Station _destiny) {
-		if( src.addTrain() ) { // is possible add another train
-							   // to that station
-			currentPos = src;
-			origin = src;
-			destiny = _destiny;
-			//find the direction in which the train
-			//have to go
-			direction = ctrl.getIndex(src) < ctrl.getIndex(_destiny)?
-				        Direction.LR : Direction.RL;
-			cord.setX(src.getCord().getX());
-			System.out.println(src +" to "+ _destiny + " dir= " + direction);
-		}else {
-			throw new IllegalStateException(
-					"Is not possible to add a Train to this station");
-		}
-		
+		currentPos = src;
+		origin = src;
+		destiny = _destiny;
+		//find the direction in which the train
+		//have to go
+		direction = ctrl.getIndex(src) < ctrl.getIndex(_destiny)?
+			        Direction.LR : Direction.RL;
+		cord.setX(src.getCord().getX());
+		System.out.println(src +" to "+ _destiny + " dir= " + direction);
 	}
 		
 	public Coordinate getCord() {
 		return cord;
+	}
+	
+	public void setOrigin(Station origin) {
+		origin.incrementNumberCurrentTrain();
+		this.origin = origin;
 	}
 
 	public void setCord(Coordinate cord) {
@@ -164,4 +163,10 @@ public class Train extends Thread {
 		currentLine.decrementTrainsInTraject();
 		
 	}
+
+	public Line getCurrentLine() {
+		return currentLine;
+	}
+	
+	
 }
