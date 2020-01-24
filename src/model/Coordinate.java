@@ -1,5 +1,13 @@
 package model;
 
+/**
+ * 
+ * TODO finish the documentation
+ * 
+ * @author Daniel Santos
+ * 		   Guillem Sanyas
+ *
+ */
 public class Coordinate {
 	private int x;
 	private int y;
