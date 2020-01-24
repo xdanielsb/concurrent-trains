@@ -18,6 +18,7 @@ public class ControlRailway {
 	/**
 	 * The lines of the railway. A line is an abstract structure representing
 	 * two stations and the rails in between, with a given fixed direction.
+	 * The first line is considered to be the most left.
 	 */
 	private Line[] lines;
 	
@@ -100,6 +101,15 @@ public class ControlRailway {
 		}
 		return res ;
 	}
+	
+	/**
+	 * Gives the index of the line in which the station 'src' is.
+	 * Since a station is in two lines (except for the first and last one),
+	 * only returns the index of the most left line.
+	 * 
+	 * @param src : the station we are looking for
+	 * @return the index
+	 */
 	public int getIndex(Station src) {
 		int ans = -1;
 		for( int i = 0; i < lines.length && ans == -1; i++) {
@@ -109,15 +119,36 @@ public class ControlRailway {
 		}
 		return ans;
 	}
+	
+	/**
+	 * Gives the total number of trains currently in the railway,
+	 * based on the length of the trains table.
+	 * 
+	 * @return the number of trains
+	 */
 	public int getNumberTrains() {
 		return trains.length;
 	}
+	
+	/**
+	 * Getter for the trains table containing all trains in the railway.
+	 * 
+	 * @return the trains table
+	 */
 	public Train[] getTrains() {
 		return trains;
 	}
+	
+	/**
+	 * Method that initializes the window in which the railway will be displayed.
+	 */
 	public void createWindow() {
 		window = new Window( this );
 	}
+	
+	/**
+	 * Method that launches all the train threads.
+	 */
 	public void startSimulation() {
 		for( Train t: trains)
 			t.start();
