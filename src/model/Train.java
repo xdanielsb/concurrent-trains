@@ -75,12 +75,10 @@ public class Train extends Thread {
 	public void advance() {
 		ElementRail lst = currentPos;
 		if (currentPos instanceof Station) {
-			if ( currentPos == currentLine.getStart() && direction == Direction.RL) {
-				currentLine.decrementTrainsInTraject();
-				currentLine = ctrl.getNextLine( currentLine, direction);
-			}
-			else if ( currentPos == currentLine.getEnd() && direction == Direction.LR) {
-				currentLine.decrementTrainsInTraject();
+			if ( (currentPos == currentLine.getStart() && direction == Direction.RL)
+				||( currentPos == currentLine.getEnd() && direction == Direction.LR)) {
+				// change of Line Logic
+				if( currentPos != origin) currentLine.decrementTrainsInTraject();
 				currentLine = ctrl.getNextLine( currentLine, direction);
 			}
 			Station st;	

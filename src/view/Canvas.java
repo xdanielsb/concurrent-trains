@@ -78,7 +78,7 @@ public class Canvas extends JPanel {
 				
 			}
 			ElementRail el = l.getElements()[l.getElements().length/2];
-			g.drawString(l.getNumberOfTrainsInTraject()+"",el.getCord().getX()+15, el.getCord().getY()-25);
+			g.drawString(l.getNumberOfTrainsInTraject()+"",el.getCord().getX()+15 -20*(l.getElements().length%2==0?1:0), el.getCord().getY()-10);
 			
 		}
 		
