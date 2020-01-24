@@ -85,9 +85,5 @@ public class TestNStations {
 		ctrl.createWindow();
 	}
 	
-	public static void main( String[] args) {
-		TestNStations t = new TestNStations( 6, 5);
-		t.start();
-	}
 
 }

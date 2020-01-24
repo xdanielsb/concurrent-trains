@@ -152,6 +152,7 @@ public class Line {
 	 */
 	public synchronized void decrementTrainsInTraject() {
 		numberOfTrainsInTraject--;
+		numberOfTrainsInTraject = numberOfTrainsInTraject == -1 ? 0: numberOfTrainsInTraject;
 		notifyAll();
 	}
 

@@ -65,6 +65,8 @@ public class Canvas extends JPanel {
 			if( el instanceof Station) {
 				g.drawImage(trainStation, el.getCord().getX(), el.getCord().getY(),40,40,null);
 				g.drawString(el.toString(),el.getCord().getX()+15, el.getCord().getY()-10);
+				g.drawString(((Station) el).getNumCurrentTrainInStation()+"",el.getCord().getX()+15, el.getCord().getY()-25);
+				
 			}else {
 				if( l.getCurrentDirection() == Direction.LR && l.getNumberOfTrainsInTraject() > 0) {					
 					g.drawImage(arrowRight, el.getCord().getX()+10, el.getCord().getY()-10,15,15,this);

@@ -75,25 +75,14 @@ public class Train extends Thread {
 	public void advance() {
 		ElementRail lst = currentPos;
 		if (currentPos instanceof Station) {
-			System.out.println(currentPos.toString() + 
-					           " **** " + origin.toString() + 
-					           destiny.toString() +
-					           " Line "+currentLine +
-					           " " +direction);
-			
-			if ( currentPos.toString() == currentLine.getStart().toString() && direction == Direction.RL) {
+			if ( currentPos == currentLine.getStart() && direction == Direction.RL) {
 				currentLine.decrementTrainsInTraject();
 				currentLine = ctrl.getNextLine( currentLine, direction);
 			}
-			else if ( currentPos.toString() == currentLine.getEnd().toString() && direction == Direction.LR) {
+			else if ( currentPos == currentLine.getEnd() && direction == Direction.LR) {
 				currentLine.decrementTrainsInTraject();
 				currentLine = ctrl.getNextLine( currentLine, direction);
 			}
-			System.out.println(currentPos.toString() + 
-			           " **** " + origin.toString() + 
-			           destiny.toString() +
-			           " Line "+currentLine +
-			           " " +direction);
 			Station st;	
 			st = currentLine.nextStation(currentPos);
 			st.isPossibleGo();
@@ -112,6 +101,7 @@ public class Train extends Thread {
 			}
 		}
 		nxt.arrive();
+		
 
 		currentPos = nxt;
 		getCord().setX(nxt.getCord().getX());

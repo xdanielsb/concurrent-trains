@@ -13,12 +13,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import test.TestFourStations;
+import test.TestNStations;
 import test.TestThreeStations;
 
 @SuppressWarnings("serial")
 public class MenuTest extends JFrame implements ActionListener{
 	private Button fourStation;
 	private Button threeStation;
+	private Button randomConfig;
 	private JLabel titleTest;
 	private JPanel panel;
 	
@@ -29,19 +31,22 @@ public class MenuTest extends JFrame implements ActionListener{
 				    dim.height/2-this.getSize().height/2);
 		
 		panel = new JPanel();
-		panel.setLayout( new GridLayout(3, 1));
+		panel.setLayout( new GridLayout(4, 1));
 		
 		titleTest = new JLabel("Predefined Test");
 		fourStation = new Button("Four Stations");
 		threeStation = new Button("Three Stations");
+		randomConfig = new Button("Random Configuration");
 		
 		
 		fourStation.addActionListener(this);
 		threeStation.addActionListener(this);
+		randomConfig.addActionListener(this);
 		
 		panel.add(titleTest);
 		panel.add(threeStation);
 		panel.add(fourStation);
+		panel.add(randomConfig);
 		
 		
 		this.getContentPane().add( panel );
@@ -55,6 +60,8 @@ public class MenuTest extends JFrame implements ActionListener{
 			new TestFourStations().start();
 		}else if( evt.getSource() == threeStation) {
 			new TestThreeStations().start();
+		}else {
+			new TestNStations( 6, 5).start();
 		}
 		
 	}

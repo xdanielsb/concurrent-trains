@@ -98,16 +98,30 @@ public class TestFourStations {
 
 		//Line 1
 		t1.addTraject( (Station) a, (Station) d);
+		t1.setOrigin((Station) a);
+		t1.setDestiny((Station) d);
 		t2.addTraject( (Station) b, (Station) a);
+		t2.setOrigin((Station) b);
+		t2.setDestiny((Station) a);
 		
 		//Line 2
 		t4.addTraject( (Station) c, (Station) b);
+		t4.setOrigin((Station) c);
+		t4.setDestiny((Station) b);
 		t5.addTraject( (Station) c, (Station) b);
+		t5.setOrigin((Station) c);
+		t5.setDestiny((Station) b);
 		
 		//Line 3
 		t7.addTraject( (Station) c, (Station) d);
+		t7.setOrigin((Station) c);
+		t7.setDestiny((Station) d);
 		t8.addTraject( (Station) d, (Station) c);
+		t8.setOrigin((Station) d);
+		t8.setDestiny((Station) c);
 		t9.addTraject( (Station) d, (Station) c);
+		t9.setOrigin((Station) d);
+		t9.setDestiny((Station) c);
 		
 		
 		ctrl.createWindow();
