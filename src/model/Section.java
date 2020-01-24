@@ -1,7 +1,23 @@
 package model;
 
+/**
+ * Class reprensenting a section in the railway.
+ * It can only store one train at a time.
+ * The train cannot change its direction while on
+ * this element.
+ * 
+ * 
+ * @author Daniel Santos
+ * 		   Guillem Sanyas
+ *
+ */
 public class Section extends ElementRail {
 
+	/**
+	 * Basic constructor for the section
+	 * 
+	 * @param _name : the name we give to this element.
+	 */
 	public Section(String _name) {
 		super(_name);
 	}
@@ -9,7 +25,7 @@ public class Section extends ElementRail {
 	/**
 	 * The section just can handle one train in t(s)
 	 * if there is a train, and another want wants to
-	 * go there this is block.
+	 * go there he has to wait.
 	 */
 	@Override
 	public synchronized void arrive() {

@@ -3,6 +3,14 @@ package model;
 import logic.ControlRailway;
 import logic.Line;
 
+/**
+ * Class representing a train in the railway.
+ * Every train is a separate thread.
+ * 
+ * @author Daniel Santos
+ * 		   Guillem Sanyas
+ *
+ */
 public class Train extends Thread {
 	
 	/**
@@ -10,32 +18,48 @@ public class Train extends Thread {
 	 */
 	private String name;
 	/**
-	 * Current pos of the train
+	 * Current position of the train
 	 */
 	private ElementRail currentPos;
 	/**
-	 * Initial origin train
+	 * Initial origin of the train
 	 */
 	private ElementRail origin;
 	/**
-	 * Destiny of the current train
+	 * Destination of the current train
 	 */
 	private ElementRail destiny;
 	/**
-	 * Direction of the current train
+	 * Direction of the current train,
+	 * calculated with origin and destiny
 	 */
 	private Direction direction;
 	/**
-	 * Monitor, that let synchronize with
-	 * other trains in the railway.
+	 * Monitor, that is synchronized with
+	 * other trains in the same portion of the railway
+	 * (called line).
 	 */
 	private Line currentLine;
+	/**
+	 * The coordinates of the train, used for display only.
+	 */
 	private Coordinate cord;
 	
+	/**
+	 * The entire railway system, that is used
+	 * to switch between lines at a given station.
+	 */
 	private ControlRailway ctrl;
 	
 	
-	
+	/**
+	 * Constructor for the Train.
+	 * 
+	 * @param _name : the name of the train.
+	 * @param line : the line in which the train is initially set. The
+	 * origin must always be a station of this line.
+	 * @param control : the entire railway system.
+	 */
 	public Train(String _name, Line line,ControlRailway control) {
 		name = _name;
 		currentLine = line;
@@ -44,10 +68,11 @@ public class Train extends Thread {
 	}
 
 	/**
-	 * Allows a train advance in the railway.
-	 * 
+	 * Makes the train advance in the railway.
+	 * It is the brain of the simulation.
 	 */
-	public void advance() { //omg
+	//TODO complete commentary
+	public void advance() {
 		ElementRail lst = currentPos;
 
 		if (currentPos != origin && currentPos instanceof Station) {
@@ -85,30 +110,33 @@ public class Train extends Thread {
 
 	/**
 	 * Set the target station of a train
-	 * @param tgt
+	 * @param tgt : the destination of the train.
 	 */
 	public void setDestiny(Station tgt) {
 		destiny = tgt;
 	}
 	
 	/**
-	 * Set the direction of a train
-	 * @param dir
+	 * Getter for the origin of the train.
+	 * 
+	 * @return the origin.
 	 */
-	public void setDirection(Direction dir) {
-		direction = dir;
-	}
-	
 	public ElementRail getOrigin() {
 		return origin;
 	}
 
+	/**
+	 * Getter for the train destination.
+	 * 
+	 * @return the destination.
+	 */
 	public ElementRail getDestiny() {
 		return destiny;
 	}
 
 	/**
-	 * Set the traject of a train
+	 * Set the traject of a train.
+	 * 
 	 * @param src source of the traject
 	 * @param _destiny destiny of the traject
 	 */
@@ -130,11 +158,23 @@ public class Train extends Thread {
 		}
 		
 	}
-		
+	
+	/**
+	 * Getter for the coordinates of the train,
+	 * used for display.
+	 * 
+	 * @return these coordinates.
+	 */
 	public Coordinate getCord() {
 		return cord;
 	}
 
+	/**
+	 * Setter for the coordinates of the train,
+	 * used for display.
+	 * 
+	 * @param cord : the new coordinates.
+	 */
 	public void setCord(Coordinate cord) {
 		this.cord = cord;
 	}
@@ -144,6 +184,12 @@ public class Train extends Thread {
 		return this.name;
 	}
 	
+	/**
+	 * Getter for the current direction
+	 * in which the train is going.
+	 * 
+	 * @return this direction.
+	 */
 	public Direction getDirection() {
 		return this.direction;
 	}
