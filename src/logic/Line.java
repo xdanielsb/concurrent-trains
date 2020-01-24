@@ -25,7 +25,7 @@ public class Line {
 	private Direction currentDirection;
 	
 	/**
-	 * The number of trains in the line.
+	 * The number of trains traveling in the line, to allow for a change of direction.
 	 */
 	private int numberOfTrainsInTraject;
 	
@@ -134,17 +134,28 @@ public class Line {
 	}
 	
 	/**
-	 * Adds trains in traject
+	 * Method called by trains when one starts moving in the line
+	 * to keep count
 	 */
 	public synchronized void incrementTrainsInTraject() {
 		numberOfTrainsInTraject++;
 	}
 	
+	/**
+	 * Method called by trains when one stops moving in the line
+	 * to keep count
+	 */
 	public synchronized void decrementTrainsInTraject() {
 		numberOfTrainsInTraject--;
 		notifyAll();
 	}
 
+	/**
+	 * Method called by trains, force them to wait if other trains are
+	 * traveling in the opposite direction
+	 * 
+	 * @param direction : the current train direction
+	 */
 	public synchronized void isTheSameDirection(Direction direction) {
 		while( numberOfTrainsInTraject > 0  && direction != currentDirection ) {
 			try {
@@ -155,19 +166,38 @@ public class Line {
 		}
 	}
 
+	/**
+	 * Getter for elements in the line.
+	 * 
+	 * @return the elements table.
+	 */
 	public ElementRail[] getElements() {
 		return elements;
 	}
 	
+	/**
+	 * Gives the number of elements in the line.
+	 * 
+	 * @return the length of the elements table.
+	 */
 	public int getNumElementsRail() {
 		return elements.length;
 	}
 
-	
+	/**
+	 * Returns the first element of the line, which has to be a station.
+	 * 
+	 * @return this station.
+	 */
 	public Station getStart() {
 		return (Station) elements[0];
 	}
 	
+	/**
+	 * Returns the last element of the line, which has to be a station.
+	 * 
+	 * @return this station.
+	 */
 	public Station getEnd() {
 		return (Station) elements[elements.length-1];
 	}
@@ -178,6 +208,13 @@ public class Line {
 	}
 
 
+	/**
+	 * Method called by trains to find the next station
+	 * they are going to, which is the opposite end of the line
+	 * 
+	 * @param currentPos : the station in which the train currently is
+	 * @return the other station in the line
+	 */
 	public Station nextStation(ElementRail currentPos) {
 		if (currentPos == this.getStart()) {
 			return this.getEnd();
