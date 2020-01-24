@@ -2,7 +2,7 @@ package model;
 
 public class Station extends ElementRail {
 
-	private final int MAX_NUMBER_TRAIN_IN_STATION  = 3;
+	public static final int MAX_NUMBER_TRAIN_IN_STATION  = 3;
 
 	private int numCurrentTrainInStation;
 	private int numComingTrain; // the current number in station plus the trains coming
