@@ -103,7 +103,7 @@ public class Line {
 				try {
 					res = dir == Direction.LR ? elements[i+1]: elements[i-1];
 				}catch ( ArrayIndexOutOfBoundsException excep) {
-					System.out.println("##################Exception " + currentPos + " " + dir);
+					System.out.println("##################Exception " + currentPos + " " + dir +"||Line||"+ this);
 					throw new ArrayIndexOutOfBoundsException();
 				}
 			}

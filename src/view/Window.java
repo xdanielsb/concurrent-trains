@@ -45,6 +45,7 @@ public class Window extends JFrame  implements ActionListener{
 		if( arg0.getSource() == startSimulation ){
 			if( !wasStarted ) {
 				wasStarted = true;
+				startSimulation.disable();
 				ctrl.startSimulation();
 			}
 		}

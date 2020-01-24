@@ -74,14 +74,26 @@ public class Train extends Thread {
 	//TODO complete commentary
 	public void advance() {
 		ElementRail lst = currentPos;
-
-		if (currentPos == getOrigin() && direction == Direction.RL ||
-			currentPos == getDestiny() && direction == Direction.LR) {
-			System.out.println("Change of line of the Train: " + this);
-			currentLine.decrementTrainsInTraject();
-			currentLine = ctrl.getNextLine( currentLine, direction);
-		}
 		if (currentPos instanceof Station) {
+			System.out.println(currentPos.toString() + 
+					           " **** " + origin.toString() + 
+					           destiny.toString() +
+					           " Line "+currentLine +
+					           " " +direction);
+			
+			if ( currentPos.toString() == currentLine.getStart().toString() && direction == Direction.RL) {
+				currentLine.decrementTrainsInTraject();
+				currentLine = ctrl.getNextLine( currentLine, direction);
+			}
+			else if ( currentPos.toString() == currentLine.getEnd().toString() && direction == Direction.LR) {
+				currentLine.decrementTrainsInTraject();
+				currentLine = ctrl.getNextLine( currentLine, direction);
+			}
+			System.out.println(currentPos.toString() + 
+			           " **** " + origin.toString() + 
+			           destiny.toString() +
+			           " Line "+currentLine +
+			           " " +direction);
 			Station st;	
 			st = currentLine.nextStation(currentPos);
 			st.isPossibleGo();
@@ -93,9 +105,7 @@ public class Train extends Thread {
 			if( currentLine.getNumberOfTrainsInTraject() == 0) {
 				// this means there is no other train
 				// using the line
-				
 				currentLine.incrementTrainsInTraject();
-				
 				currentLine.setCurrentDirection(direction);
 			}else {
 				currentLine.incrementTrainsInTraject();

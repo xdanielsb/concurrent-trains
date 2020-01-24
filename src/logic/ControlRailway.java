@@ -96,7 +96,7 @@ public class ControlRailway {
 			// When the current line is found : happens only once
 			if( lines[i] == l) {
 				// depending on direction gives the line on left or right
-				res = s == Direction.LR? lines[i+1] : lines[i-1];
+				res = (s == Direction.LR)? lines[i+1] : lines[i-1];
 			}
 		}
 		return res ;
