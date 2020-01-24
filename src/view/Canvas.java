@@ -21,17 +21,21 @@ import model.Station;
 import model.Train;
 
 @SuppressWarnings("serial")
-public class Canvas extends JComponent {
+public class Canvas extends JPanel {
 	private ControlRailway ctrl;
 	private final String  urlTrainl = "../assets/trainr.png";
 	private final String  urlTrainr = "../assets/train.png";
 	private final String  urlTrainStation = "../assets/train_station.png";
 	private final String  urlRailTrain = "../assets/rail_train.png";
+	private final String  urlArrowRight = "../assets/arrow_right.gif";
+	private final String  urlArrowLeft = "../assets/arrow_left.gif";
 	
 	private  BufferedImage trainRight;
 	private  BufferedImage trainLeft;
 	private  BufferedImage trainStation;
 	private  BufferedImage trainRail;
+	private  Image arrowRight;
+	private  Image arrowLeft;
 	
 	public Canvas(ControlRailway _ctrl) {
 		ctrl = _ctrl;
@@ -40,6 +44,8 @@ public class Canvas extends JComponent {
 			trainRight = ImageIO.read(getClass().getResource(urlTrainr));
 			trainStation = ImageIO.read(getClass().getResource(urlTrainStation));
 			trainRail = ImageIO.read(getClass().getResource(urlRailTrain));
+			arrowRight = new ImageIcon(this.getClass().getResource(urlArrowRight)).getImage();
+			arrowLeft = new ImageIcon(this.getClass().getResource(urlArrowLeft)).getImage();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,6 +53,7 @@ public class Canvas extends JComponent {
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		
 		paintElementsRail( g );
 		paintTrains( g );
 	}
@@ -57,7 +64,13 @@ public class Canvas extends JComponent {
 		for( ElementRail el: l.getElements()) {
 			if( el instanceof Station) {
 				g.drawImage(trainStation, el.getCord().getX(), el.getCord().getY(),40,40,null);
+				g.drawString(el.toString(),el.getCord().getX()+15, el.getCord().getY()-10);
 			}else {
+				if( l.getCurrentDirection() == Direction.LR && l.getNumberOfTrainsInTraject() > 0) {					
+					g.drawImage(arrowRight, el.getCord().getX()+10, el.getCord().getY()-10,15,15,this);
+				}else if( l.getCurrentDirection() == Direction.RL && l.getNumberOfTrainsInTraject() > 0){
+					g.drawImage(arrowLeft, el.getCord().getX()+10, el.getCord().getY()-10,15,15,this);
+				}
 				g.drawImage(trainRail, el.getCord().getX(), el.getCord().getY(),40,40,null);
 			}
 		}
@@ -71,6 +84,9 @@ public class Canvas extends JComponent {
 			}else {
 				g.drawImage(trainRight, el.getCord().getX(), el.getCord().getY(),40,40,null);
 			}
+			g.drawString(el.toString(), el.getCord().getX(), el.getCord().getY()+10);
+			String trajet = el.getOrigin() + " -> " + el.getDestiny();
+			g.drawString(trajet, el.getCord().getX(), el.getCord().getY()+40);
 		}
 	}
 }

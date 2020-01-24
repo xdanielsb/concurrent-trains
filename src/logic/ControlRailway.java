@@ -20,7 +20,7 @@ public class ControlRailway {
 	public void addLines( Line..._lines ) {
 		lines = _lines;
 		for( int i= 0; i< trains.length; i++) {	
-			trains[i].getCord().setY(180+i*30);
+			trains[i].getCord().setY(180+i*55);
 		}
 	}
 	
@@ -57,8 +57,10 @@ public class ControlRailway {
 	public Train[] getTrains() {
 		return trains;
 	}
-	public void startSimulation() {
+	public void createWindow() {
 		window = new Window( this );
+	}
+	public void startSimulation() {
 		for( Train t: trains)
 			t.start();
 	}

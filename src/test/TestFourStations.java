@@ -1,5 +1,4 @@
 package test;
-
 import logic.ControlRailway;
 import logic.Line;
 import model.ElementRail;
@@ -7,9 +6,23 @@ import model.Section;
 import model.Station;
 import model.Train;
 
-public class TestFourStations {
 
-	public static void main(String[] args) {
+/**
+ * 
+ * @author SANYAS Guillem
+ * 		   SANTOS Daniel
+ * 
+ * Launcher of the application, simulate the behaviour 
+ * of trains over a railway.
+ */
+
+public class TestFourStations {
+	
+	public TestFourStations() {
+		
+	}
+
+	public void start() {
 		
 		ControlRailway ctrl = new ControlRailway();
 		
@@ -52,9 +65,9 @@ public class TestFourStations {
 		// Add the line to the rail
 		line2.addLine( b, bc1,bc2, bc3, c);
 		
-		// Create the trains for line 1
-		Train t4 = new Train( "Train 4", line2, ctrl );
-		Train t5 = new Train( "Train 5", line2, ctrl );
+		// Create the trains for line 2
+		Train t4 = new Train( "Train 3", line2, ctrl );
+		Train t5 = new Train( "Train 4", line2, ctrl );
 		
 		/**
 		 * 
@@ -74,9 +87,9 @@ public class TestFourStations {
 		line3.addLine( c, cd1,cd2, cd3, d);
 		
 		// Create the trains for line 1
-		Train t7 = new Train( "Train 4", line3, ctrl );
-		Train t8 = new Train( "Train 5", line3, ctrl );
-		Train t9 = new Train( "Train 6", line3,  ctrl);
+		Train t7 = new Train( "Train 5", line3, ctrl );
+		Train t8 = new Train( "Train 6", line3, ctrl );
+		Train t9 = new Train( "Train 7", line3,  ctrl);
 		
 		ctrl.addTrains(t1, t2, t4, t5, t7,t8,t9);
 		ctrl.addLines(line1, line2,line3);
@@ -96,7 +109,8 @@ public class TestFourStations {
 		t8.addTraject( (Station) d, (Station) c);
 		t9.addTraject( (Station) d, (Station) c);
 		
-		ctrl.startSimulation();
+		
+		ctrl.createWindow();
 	}
 
 }

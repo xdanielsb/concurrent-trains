@@ -98,6 +98,14 @@ public class Train extends Thread {
 	public void setDirection(Direction dir) {
 		direction = dir;
 	}
+	
+	public ElementRail getOrigin() {
+		return origin;
+	}
+
+	public ElementRail getDestiny() {
+		return destiny;
+	}
 
 	/**
 	 * Set the traject of a train

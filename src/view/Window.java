@@ -1,7 +1,10 @@
 package view;
 
+import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
@@ -10,22 +13,41 @@ import logic.Line;
 import model.ElementRail;
 
 @SuppressWarnings("serial")
-public class Window extends JFrame {
+public class Window extends JFrame  implements ActionListener{
 	
 	private ControlRailway ctrl;
+	private Button startSimulation;
+	private boolean wasStarted ;
+	
 	public Window(ControlRailway _ctrl) {
 		ctrl = _ctrl;
+		wasStarted = false;
 		Canvas cv = new Canvas(ctrl);
 		int length = 0;
 		for (Line l : ctrl.getLines()) {
 			length += l.getNumElementsRail();
 		}
-		setSize(length*50+ 190, 400 + ctrl.getNumberTrains()*10 );
+		setSize(length*42+ 190, 400 + ctrl.getNumberTrains()*30 );
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-this.getSize().width/2, 
 				    dim.height/2-this.getSize().height/2);
-		add( cv );
+		
+		startSimulation = new Button("Start Simulation");
+		startSimulation.addActionListener(this);
+		cv.add( startSimulation);
+		this.getContentPane().add( cv );
+		
 		setVisible( true );
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if( arg0.getSource() == startSimulation ){
+			if( !wasStarted ) {
+				wasStarted = true;
+				ctrl.startSimulation();
+			}
+		}
+		
 	}
 }

@@ -15,7 +15,6 @@ public class Line {
 	private ElementRail[] elements;
 	private Direction currentDirection;
 	private int numberOfTrainsInTraject;
-	
 	private int id;
 	
 	public Line( int _id) {

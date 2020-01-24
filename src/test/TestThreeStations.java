@@ -15,7 +15,11 @@ import model.*;
  */
 
 public class TestThreeStations {
-	public static void main( String[] args) {
+	public TestThreeStations() {
+		
+	}
+
+	public void start() {
 		
 		ControlRailway ctrl = new ControlRailway();
 		
@@ -27,11 +31,11 @@ public class TestThreeStations {
 		Line line1 = new Line( 1 );
 		
 		// Create the RailWay;
-		ElementRail staA = new Station("Station A");
+		ElementRail staA = new Station("A");
 		ElementRail a = new Section("AB");
 		ElementRail b = new Section("BC");
 		ElementRail c = new Section("CD");
-		ElementRail staD = new Station("Station D");
+		ElementRail staD = new Station("D");
 		
 		// Add the line to the rail
 		line1.addLine( staA, a, b, c, staD);
@@ -54,7 +58,7 @@ public class TestThreeStations {
 		ElementRail e = new Section("DE");
 		ElementRail e2 = new Section("DE2");
 		ElementRail f = new Section("EF");
-		ElementRail staG = new Station("Station G");
+		ElementRail staG = new Station("G");
 		
 		// Add the line to the rail
 		line2.addLine( staD, e,e2, f, staG);
@@ -69,9 +73,6 @@ public class TestThreeStations {
 		ctrl.addLines(line1, line2);
 		
 		
-		
-		
-		
 		// Create the trajects
 
 		//Line 1
@@ -84,8 +85,8 @@ public class TestThreeStations {
 		t5.addTraject( (Station) staG, (Station) staA);
 		t6.addTraject( (Station) staG, (Station) staA);
 		
-		
-		ctrl.startSimulation();
+		ctrl.createWindow();
+
 		
 	}
 }
