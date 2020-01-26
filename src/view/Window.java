@@ -36,7 +36,6 @@ public class Window extends JFrame  implements ActionListener{
 		startSimulation.addActionListener(this);
 		cv.add( startSimulation);
 		this.getContentPane().add( cv );
-		
 		setVisible( true );
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}

@@ -1,8 +1,5 @@
 package test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import logic.ControlRailway;
 import logic.Line;
 import model.ElementRail;
@@ -15,7 +12,6 @@ public class TestNStations {
 	private int nStations;
 	private int nTrains;
 	private Line[] lines;
-	private Train[] trains;
 	private Station[] listStations;
 	ControlRailway ctrl = new ControlRailway();
 	
@@ -25,12 +21,18 @@ public class TestNStations {
 		listStations = new Station[ nStations ];
 		lines = new Line[ nStations -1 ];
 	}
-
-	public Train createTrain( int rnd, int id) {
+	
+	/**
+	 * Create a train an set its origin
+	 * @param id the id of the train
+	 * @return the train
+	 */
+	public Train createTrain( int id) {
 		Line l = null; 
-		Station start = null, end= null;
+		Station start = null;
 		boolean flag = true;
-		for( int i= 0; i < lines.length && flag; i++) {
+		int rnd = (int) (Math.random()*(100));
+		for( int i= 0; i < nStations && flag; i++) {
 			l = lines[(rnd+i)%lines.length];
 			if( l.getStart().isPossibleAddAnotherTrain()) {
 				start = l.getStart(); flag = false;
@@ -38,26 +40,42 @@ public class TestNStations {
 				start = l.getEnd(); flag = false;
 			}
 		}
-		
-		rnd = (int) (Math.random()*(100));
-		flag = true;
-		for( int i= 0; i < listStations.length && flag; i++) {
-			end = listStations[(i+rnd)%listStations.length]; 
-			if(end.toString() != start.toString()) {
-				flag = false;
-			}
-		}
 		Train t = new Train("Train "+id, l, ctrl);
 		t.setOrigin(start);
-		t.setDestiny(end);
 		return t;
 	}
 	
+	/**
+	 * Set a destiny of the train, the 
+	 * origin should be set to call this operation
+	 * @param t train
+	 */
+	public void setPRandomDestiny(Train t) {
+		Station end=null;
+		int rnd = (int) (Math.random()*(100));
+		boolean flag = true;
+		for( int i= 0; i < nStations && flag; i++) {
+			end = listStations[(i+rnd)%nStations]; 
+			if(end != t.getOrigin()) {
+				flag = false;
+			}
+		}
+		t.setDestiny(end);
+	}
+	
+	/**
+	 * Base Logic to create a pseudo-random
+	 * configuration for n-trains and m-
+	 * stations
+	 */
 	public void start() {
-		for( int  i = 0 ; i< nStations; i++) 
-			listStations[i]= new Station("A"+(i+1));
+		for( int  i = 0 ; i< nStations; i++) {
+			char let = (char) ('A'+i);
+			listStations[i]= new Station(let+"");
+		}
 		
-		int nSections =0, nLines = nStations - 1;
+		int nSections = 0;
+		int nLines = nStations - 1;
 		for( int i= 0; i< nLines; i++) {
 			int nRails = (int)(Math.random()*3 + 1);
 			ElementRail[] elements = new ElementRail[nRails+2];
@@ -71,16 +89,15 @@ public class TestNStations {
 			
 		}
 		
-		Train[] auxTrains = new Train[nTrains];
+		Train[] trains = new Train[nTrains];
 		for( int i= 0; i < nTrains; i++) {
-			int rnd  = (int) (Math.random()*lines.length);
-			auxTrains[i] = createTrain( rnd, i+1); 
+			trains[i] = createTrain(i+1); 
 		}
-		ctrl.addTrains(auxTrains);
+		ctrl.addTrains(trains);
 		ctrl.addLines( lines );
 		
-		for( Train t : auxTrains) 
-			t.addTraject(t.getOrigin(), t.getDestiny());
+		for( Train t: trains)
+			setPRandomDestiny( t);
 		
 		ctrl.createWindow();
 	}

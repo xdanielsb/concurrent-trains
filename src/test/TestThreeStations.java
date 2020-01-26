@@ -76,24 +76,24 @@ public class TestThreeStations {
 		// Create the trajects
 
 		//Line 1
-		t1.addTraject( (Station) staA, (Station) staG);
+		
 		t1.setOrigin((Station) staA);
 		t1.setDestiny((Station) staG);
-		t2.addTraject( (Station) staA, (Station) staD);
+		
 		t2.setOrigin((Station) staA);
 		t2.setDestiny((Station) staD);
-		t3.addTraject( (Station) staA, (Station) staG);
+		
 		t3.setOrigin((Station) staA);
 		t3.setDestiny((Station) staG);
 		
 		//Line 2
-		t4.addTraject( (Station) staD, (Station) staG);
+		
 		t4.setOrigin((Station) staD);
 		t4.setDestiny((Station) staG);
-		t5.addTraject( (Station) staG, (Station) staA);
+		
 		t5.setOrigin((Station) staG);
 		t5.setDestiny((Station) staA);
-		t6.addTraject( (Station) staG, (Station) staA);
+		
 		t6.setOrigin((Station) staG);
 		t6.setDestiny((Station) staA);
 		

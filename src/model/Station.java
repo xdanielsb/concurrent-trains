@@ -83,6 +83,11 @@ public class Station extends ElementRail {
 		return true;
 	}
 	
+	/**
+	 * Helper method that check if is possible to add another train
+	 * this is used in the initialization part.
+	 * @return boolean
+	 */
 	public boolean isPossibleAddAnotherTrain() {
 		return numCurrentTrainInStation < MAX_NUMBER_TRAIN_IN_STATION;
 	}
@@ -124,14 +129,17 @@ public class Station extends ElementRail {
 		numComingTrain++;
 	}
 	
-	@Override
-	public String toString() {
-		return this.name;
-	}
-
+	/**
+	 * Method used to incrementNumberCurrentTrains in Station
+	 * this is used just in the initialization part, that is 
+	 * the reason that is not synchronized.
+	 */
 	public void incrementNumberCurrentTrain() {
 		numCurrentTrainInStation++;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

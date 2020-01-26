@@ -32,8 +32,6 @@ public class ControlRailway {
 	 */
 	private Train[] trains;
 	
-	
-	
 	/**
 	 * Constructor for the railway
 	 */

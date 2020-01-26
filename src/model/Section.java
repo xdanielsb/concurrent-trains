@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Class reprensenting a section in the railway.
+ * Class that represents a section in the railway.
  * It can only store one train at a time.
  * The train cannot change its direction while on
  * this element.
@@ -35,7 +35,7 @@ public class Section extends ElementRail {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-	//	System.out.println( this + " is blocked");
+		System.out.println( this + " is blocked");
 		numTrainsInRail = 1;
 	}
 
@@ -46,7 +46,7 @@ public class Section extends ElementRail {
 	@Override
 	public synchronized void leave() {
 		numTrainsInRail = 0;
-//		System.out.println( this + " is unblocked");
+		System.out.println( this + " is unblocked");
 		notifyAll();
 	}
 }

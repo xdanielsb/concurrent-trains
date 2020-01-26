@@ -100,7 +100,6 @@ public class Train extends Thread {
 		}
 		nxt.arrive();
 		
-
 		currentPos = nxt;
 		getCord().setX(nxt.getCord().getX());
 		// just leaves when is possible arrive
@@ -113,6 +112,10 @@ public class Train extends Thread {
 	 */
 	public void setDestiny(Station tgt) {
 		destiny = tgt;
+		if( origin == null) {
+			throw new IllegalStateException("Before set a destiny you should set the origin.");
+		}
+		this.findDirection();
 	}
 	
 	/**
@@ -130,26 +133,23 @@ public class Train extends Thread {
 	}
 
 	public Station getDestiny() {
-
 		return destiny;
 	}
 
 	/**
-	 * Set the traject of a train.
+	 * Find the direction for which the train
+	 * should go.
 	 * 
 	 * @param src source of the traject
 	 * @param _destiny destiny of the traject
 	 */
-	public void addTraject(Station src, Station _destiny) {
-		currentPos = src;
-		origin = src;
-		destiny = _destiny;
+	public void findDirection() {
 		//find the direction in which the train
 		//have to go
-		direction = ctrl.getIndex(src) < ctrl.getIndex(_destiny)?
+		direction = ctrl.getIndex(origin) < ctrl.getIndex(destiny)?
 			        Direction.LR : Direction.RL;
-		cord.setX(src.getCord().getX());
-		System.out.println(src +" to "+ _destiny + " dir= " + direction);
+		cord.setX(origin.getCord().getX());
+		System.out.println(origin +" to "+ destiny + " dir= " + direction);
 	}
 	
 	/**
@@ -162,9 +162,14 @@ public class Train extends Thread {
 		return cord;
 	}
 	
+	/**
+	 * Set the Origin of a given train
+	 * @param origin
+	 */
 	public void setOrigin(Station origin) {
 		origin.incrementNumberCurrentTrain();
 		this.origin = origin;
+		this.currentPos = origin;
 	}
 
 	/**
@@ -175,11 +180,6 @@ public class Train extends Thread {
 	 */
 	public void setCord(Coordinate cord) {
 		this.cord = cord;
-	}
-
-	@Override
-	public String toString() {
-		return this.name;
 	}
 	
 	/**
@@ -195,7 +195,6 @@ public class Train extends Thread {
 	@Override
 	public void run() {
 		while( currentPos != destiny) {
-			System.out.println("Current pos  "+this.name+ " = "+currentPos );
 			advance();
 			try {
 				sleep(1000);
@@ -204,13 +203,23 @@ public class Train extends Thread {
 			}
 			ctrl.getWindow().repaint();
 		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~"+this.name +" Arrives ");
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~"+this.name +" Arrives ");
 		currentLine.decrementTrainsInTraject();
 		
 	}
 
+	/**
+	 * Get the line is which is moving the train
+	 * who calls the method.
+	 * @return Line
+	 */
 	public Line getCurrentLine() {
 		return currentLine;
+	}
+	
+	@Override
+	public String toString() {
+		return this.name;
 	}
 	
 	

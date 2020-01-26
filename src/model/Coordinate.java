@@ -2,7 +2,8 @@ package model;
 
 /**
  * 
- * TODO finish the documentation
+ * TODO Utility class responsible to manage the coordinates 
+ *      (x,y) of a ElementRail or Train in the canvas.
  * 
  * @author Daniel Santos
  * 		   Guillem Sanyas

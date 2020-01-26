@@ -62,23 +62,29 @@ public class Canvas extends JPanel {
 		// Stations and Sections
 		for (Line l : ctrl.getLines()) {
 			for( ElementRail el: l.getElements()) {
+				int x = el.getCord().getX();
+				int y = el.getCord().getY();
 				if( el instanceof Station) {
-					g.drawImage(trainStation, el.getCord().getX(), el.getCord().getY(),40,40,null);
-					g.drawString(el.toString(),el.getCord().getX()+15, el.getCord().getY()-10);
-					g.drawString(((Station) el).getNumCurrentTrainInStation()+"",el.getCord().getX()+15, el.getCord().getY()-25);
+					g.drawImage(trainStation, x, y,40,40,null);
+					g.drawString(el.toString(),x+15, y-10);
+					g.drawString(((Station) el).getNumCurrentTrainInStation()+"",x+15, y-25);
 					
 				}else {
-					if( l.getCurrentDirection() == Direction.LR && l.getNumberOfTrainsInTraject() > 0) {					
-						g.drawImage(arrowRight, el.getCord().getX()+10, el.getCord().getY()-10,15,15,this);
-					}else if( l.getCurrentDirection() == Direction.RL && l.getNumberOfTrainsInTraject() > 0){
-						g.drawImage(arrowLeft, el.getCord().getX()+10, el.getCord().getY()-10,15,15,this);
+					if( l.getCurrentDirection() == Direction.LR 
+							 && l.getNumberOfTrainsInTraject() > 0) {					
+						g.drawImage(arrowRight, x+10, y-10,15,15,this);
+					}else if( l.getCurrentDirection() == Direction.RL 
+							 && l.getNumberOfTrainsInTraject() > 0){
+						g.drawImage(arrowLeft, x+10, y-10,15,15,this);
 					}
-					g.drawImage(trainRail, el.getCord().getX(), el.getCord().getY(),40,40,null);
+					g.drawImage(trainRail,x , y,40,40,null);
 				}
 				
 			}
 			ElementRail el = l.getElements()[l.getElements().length/2];
-			g.drawString(l.getNumberOfTrainsInTraject()+"",el.getCord().getX()+15 -20*(l.getElements().length%2==0?1:0), el.getCord().getY()-10);
+			g.drawString(l.getNumberOfTrainsInTraject()+"",
+					    el.getCord().getX()+15 -20*(l.getElements().length%2==0?1:0), 
+					    el.getCord().getY()-10);
 			
 		}
 		
@@ -88,11 +94,17 @@ public class Canvas extends JPanel {
 		for (Line l : ctrl.getLines())
 		for( Train el: ctrl.getTrains()) {
 			if( el.getDirection() == Direction.LR) {
-				g.drawImage(trainLeft, el.getCord().getX(), el.getCord().getY(),40,40,null);
+				g.drawImage(trainLeft, 
+						el.getCord().getX(), 
+						el.getCord().getY(),40,40,null);
 			}else {
-				g.drawImage(trainRight, el.getCord().getX(), el.getCord().getY(),40,40,null);
+				g.drawImage(trainRight, 
+						el.getCord().getX(), 
+						el.getCord().getY(),40,40,null);
 			}
-			g.drawString(el.toString(), el.getCord().getX(), el.getCord().getY()+10);
+			g.drawString(el.toString(), 
+					el.getCord().getX(), 
+					el.getCord().getY()+10);
 			String trajet = el.getOrigin() + " -> " + el.getDestiny();
 			g.drawString(trajet, el.getCord().getX(), el.getCord().getY()+40);
 		}

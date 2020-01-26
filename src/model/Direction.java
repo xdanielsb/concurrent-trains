@@ -3,7 +3,9 @@ package model;
 /**
  * 
  * Directions in which trains can go.
- * Only two exists in our simple model : left to right and right to left.
+ * supported directions
+ * * LR -> left to right
+ * * RL -> right to left
  * 
  * @author Daniel Santos
  * 		   Guillem Sanyas

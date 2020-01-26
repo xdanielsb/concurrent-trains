@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -22,22 +21,24 @@ public class MenuTest extends JFrame implements ActionListener{
 	private Button threeStation;
 	private Button randomConfig;
 	private JLabel titleTest;
+	private JLabel titleRandomTest;
+	
 	private JPanel panel;
 	
 	public MenuTest() {
-		setSize(300,300 );
+		setSize(500,300 );
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-this.getSize().width/2, 
 				    dim.height/2-this.getSize().height/2);
 		
 		panel = new JPanel();
-		panel.setLayout( new GridLayout(4, 1));
+		panel.setLayout( new GridLayout(5, 1));
 		
-		titleTest = new JLabel("Predefined Test");
+		titleTest = new JLabel("Predefined Test - Configurations were set");
 		fourStation = new Button("Four Stations");
 		threeStation = new Button("Three Stations");
 		randomConfig = new Button("Random Configuration");
-		
+		titleRandomTest = new JLabel("Pseudorandom Test - {Trains, Stations and Sections vary PseudoRandom}");
 		
 		fourStation.addActionListener(this);
 		threeStation.addActionListener(this);
@@ -46,6 +47,7 @@ public class MenuTest extends JFrame implements ActionListener{
 		panel.add(titleTest);
 		panel.add(threeStation);
 		panel.add(fourStation);
+		panel.add(titleRandomTest);
 		panel.add(randomConfig);
 		
 		
@@ -61,7 +63,9 @@ public class MenuTest extends JFrame implements ActionListener{
 		}else if( evt.getSource() == threeStation) {
 			new TestThreeStations().start();
 		}else {
-			new TestNStations( 6, 5).start();
+			int numStations = (int) (Math.random()*7+2);   // [2 7]
+			int numTrains = (int) (Math.random() * 10 + 1);// [1 10]
+ 			new TestNStations( numStations, numTrains).start();
 		}
 		
 	}

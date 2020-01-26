@@ -26,8 +26,6 @@ public abstract class ElementRail {
 	 */
 	protected Coordinate cord;
 	
-	
-	
 	/**
 	 * Constructor for the element, used by its children
 	 *
@@ -38,6 +36,7 @@ public abstract class ElementRail {
 		numTrainsInRail = 0;
 		cord = new Coordinate(100, 130);
 	}
+	
 	/**
 	 * If the method is fully executed
 	 * it means that a train can land in this element.

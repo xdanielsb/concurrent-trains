@@ -100,17 +100,12 @@ public class Line {
 		ElementRail res = null;
 		for( int i = 0; i < elements.length && res == null; i++)
 			if( elements[i] == currentPos) {
-				try {
-					res = dir == Direction.LR ? elements[i+1]: elements[i-1];
-				}catch ( ArrayIndexOutOfBoundsException excep) {
-					System.out.println("##################Exception " + currentPos + " " + dir +"||Line||"+ this);
-					throw new ArrayIndexOutOfBoundsException();
-				}
+				res =   (dir == Direction.LR )? 
+						elements[i+1]:
+						elements[i-1];
 			}
-		if( res == null) {
-			System.out.println( currentPos  + " " + dir + " NOT FOUND at "+this);
+		if( res == null) 
 			throw new NoSuchElementException("There was not found a valid pos");
-		}
 		return res;
 	}
 
@@ -133,7 +128,8 @@ public class Line {
 	 * @param currentDirection : the current direction of the train.
 	 */
 	public synchronized void setCurrentDirection(Direction currentDirection) {
-		System.out.println(" @@@@@@@@@ New Direction in RailWay" + currentDirection);
+		System.out.println(this + 
+				" has change of direction,  new direction =" + currentDirection);
 		this.currentDirection = currentDirection;
 		notifyAll();
 	}
@@ -162,7 +158,8 @@ public class Line {
 	 * @param direction : the current train direction
 	 */
 	public synchronized void isTheSameDirection(Direction direction) {
-		while( numberOfTrainsInTraject > 0  && direction != currentDirection ) {
+		while( numberOfTrainsInTraject > 0  
+				&& direction != currentDirection ) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -223,14 +220,13 @@ public class Line {
 	public Station nextStation(ElementRail currentPos) {
 		if (currentPos == this.getStart()) {
 			return this.getEnd();
-		}
-		else if (currentPos == this.getEnd()) {
+		}else if (currentPos == this.getEnd()) {
 			return this.getStart();
-		}
-		else {
-			throw new IllegalStateException("The train is not at a station but is searching for a new one.");
+		}else {
+			throw new 
+			IllegalStateException(
+					"The train is not at a station but is searching for a new one.");
 		}
 	}
-
 	
 }
