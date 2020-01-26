@@ -12,7 +12,9 @@ The source code was created from scratch
  - diagram -> Contains the static diagram of the code 
 
 ### Diagram
-<img src=""/> 
+<img src=""/>
+### Instructions
+<img src="instructions.png"/> 
 
 #### Code Description
 The project was based in the architectural patern Model - View  - Controller in which our model is src/model, our controllers are located in src/logic  and our view are in src/view. 
