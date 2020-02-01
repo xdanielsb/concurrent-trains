@@ -1,5 +1,5 @@
 #### Authors
-	SANTOS Daniel 
+	SANTOS Daniel
 	SANYAS Guillem
 #### Description Project
 	Simulation of Stations and Trains
@@ -7,9 +7,12 @@
 #### Description of the repository
 The source code was created from scratch
 
- - src/    -> Contains all the source code as well as the assets to run it
- - bin/    -> Binary files
- - diagram -> Contains the static diagram of the code
+ - src/
+  - Contains all the source code as well as the assets to run it
+ - bin/
+  - Binary files
+ - assets/
+  - Contains the static diagram of the code and the image of the GUI description
 
 ### Diagram
 The below diagram shows the static diagram of the controller and model of the application.
@@ -111,7 +114,7 @@ public void run(){
 		move();
 
 		sleep(2000);
-		
+
 	}
 
 }
@@ -217,7 +220,7 @@ public synchronized void enterElement(){
 
 ```
 public synchronized void leaveElement(){
-	
+
 	nbTrains--;
 
 	notifyAll();
@@ -381,7 +384,7 @@ public synchronized stopGoingLeft(){
 	nbTrainsRightLeft--;
 
 	notifyAll();
-	
+
 }
 ```
 
@@ -403,7 +406,7 @@ public synchronized void enterElement(Direction dir){
 		railway.goingLeft();
 
 	}
-	
+
 	while (! invariantSection()) {
 
 		try {
@@ -435,7 +438,7 @@ public synchronized void leaveElement(Direction dir) {
 	else {
 
 		railway.stopGoingLeft();
-		
+
 	}
 
 	hasTrains = false;
