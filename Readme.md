@@ -65,6 +65,7 @@ Position : `+move() : void`
 
 ##### Dans Railway
 
+```
 private int findIndexElement(Element e) {
 
 	int i = -1;
@@ -78,7 +79,9 @@ private int findIndexElement(Element e) {
 	return i;
 
 }
+```
 
+```
 public Element findNextElement(Position p){
 
 	int currentIndex = findIndexElement(p.element);
@@ -88,16 +91,19 @@ public Element findNextElement(Position p){
 	return e;
 
 }
+```
 
 ##### Dans Train
 
+```
 public void move(){
 
 	position.move();
 
 }
+```
 
-
+```
 public void run(){
 
 	while(true){
@@ -109,8 +115,11 @@ public void run(){
 	}
 
 }
+```
 
 ##### Dans Position
+
+```
 public void move(){
 
 	Element nextElement = element.railway.findNextElement(this);
@@ -118,6 +127,7 @@ public void move(){
 	element = nextElement;
 
 }
+```
 
 ### Exercice 2
 
@@ -166,12 +176,15 @@ Section : `+enterElement() : void`, `+leaveElement(): void`, `-invariantSection(
 
 ##### Dans Element
 
+```
 public abstract void enterElement();
 
 public abstract void leaveElement();
+```
 
 ##### Dans Station
 
+```
 private invariantStation(){
 
 	// futur number of trains = nbTrains + 1
@@ -179,7 +192,9 @@ private invariantStation(){
 	return nbTrains + 1 <= size;
 
 }
+```
 
+```
 public synchronized void enterElement(){
 
 	while (! invariantStation()){
@@ -198,7 +213,9 @@ public synchronized void enterElement(){
 	nbTrains = nbTrains+1;
 
 }
+```
 
+```
 public synchronized void leaveElement(){
 	
 	nbTrains--;
@@ -206,9 +223,11 @@ public synchronized void leaveElement(){
 	notifyAll();
 
 }
+```
 
 ##### Dans Section
 
+```
 private invariantSection(){
 
 	// future state if there is no train = there is a train
@@ -218,7 +237,9 @@ private invariantSection(){
 	return ! hasTrains;
 
 }
+```
 
+```
 public synchronized void enterElement(){
 
 	while (! invariantSection()) {
@@ -238,7 +259,9 @@ public synchronized void enterElement(){
 	hasTrains = true;
 
 }
+```
 
+```
 public synchronized void leaveElement() {
 
 	hasTrains = false;
@@ -246,11 +269,13 @@ public synchronized void leaveElement() {
 	notifyAll();
 
 }
+```
 
 #### Question 2.8
 
 ##### Dans Position
 
+```
 public void move(){
 
 	Element nextElement = element.railway.findNextElement(this);
@@ -262,6 +287,7 @@ public void move(){
 	element = nextElement;
 
 }
+```
 
 ### Exercice 3
 
@@ -289,12 +315,15 @@ Le railway se charge de la gestion de ces variables.
 
 ##### Dans Railway
 
+```
 private boolean invariantRailway(futureNbTrainsLeftRight,futureNbTrainsRightLeft){
 
 	return futureNbTrainsLeftRight*futureNbTrainsRightLeft == 0 ;
 
 }
+```
 
+```
 public synchronized void goingRight(){
 
 	while (! invariantRailway(nbTrainsLeftRight + 1,nbTrainsRightLeft)){
@@ -313,7 +342,9 @@ public synchronized void goingRight(){
 	nbTrainsLeftRight++;
 
 }
+```
 
+```
 public synchronized stopGoingRight(){
 
 	nbTrainsLeftRight--;
@@ -321,7 +352,9 @@ public synchronized stopGoingRight(){
 	notifyAll();
 
 }
+```
 
+```
 public synchronized void goingLeft(){
 
 	while (! invariantRailway(nbTrainsLeftRight,nbTrainsRightLeft + 1)){
@@ -340,7 +373,9 @@ public synchronized void goingLeft(){
 	nbTrainsRightLeft++;
 
 }
+```
 
+```
 public synchronized stopGoingLeft(){
 
 	nbTrainsRightLeft--;
@@ -348,11 +383,13 @@ public synchronized stopGoingLeft(){
 	notifyAll();
 	
 }
+```
 
 #### Question 3.5
 
 ##### Dans Section
 
+```
 public synchronized void enterElement(Direction dir){
 
 	if (dir == Direction.LR){
@@ -384,7 +421,9 @@ public synchronized void enterElement(Direction dir){
 	hasTrains = true;
 
 }
+```
 
+```
 public synchronized void leaveElement(Direction dir) {
 
 	if (dir == Direction.LR){
@@ -404,3 +443,4 @@ public synchronized void leaveElement(Direction dir) {
 	notifyAll();
 
 }
+```
