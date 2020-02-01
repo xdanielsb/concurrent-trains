@@ -1,6 +1,6 @@
 #### Authors
-	SANTOS BUSTOS Daniel Fernando
-	SANYAS Guillem Merlin
+	SANTOS Daniel 
+	SANYAS Guillem
 #### Description Project
 	Simulation of Stations and Trains
 
@@ -12,13 +12,13 @@ The source code was created from scratch
  - diagram -> Contains the static diagram of the code
 
 ### Diagram
-The below diagram shows the 
-<img src=""/>
+The below diagram shows the static diagram of the controller and model of the application.
+<img src="assets/classModel.png"/>
 
 
 ### Instructions
 In the following image you can see the different elements that are shown in the graphic interface, check them for a better comprenhension of the simulation.
-<img src="descriptionImgGUI.png"/>
+<img src="assets/descriptionImgGUI.png"/>
 
 #### Code Description
 The project was based in the architectural pattern Model - View  - Controller in which our model is src/model, our controllers are located in src/logic  and our view  components are in src/view.
