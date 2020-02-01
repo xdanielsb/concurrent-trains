@@ -102,13 +102,15 @@ public class TestNStations {
 		for( int i= 0; i < nTrains; i++) {
 			trains[i] = createTrain(i+1); 
 		}
-		ctrl.addTrains(trains);
-		ctrl.addLines( lines );
-		
-		for( Train t: trains)
-			setPRandomDestiny( t);
-		
-		ctrl.createWindow();
+		try {
+			ctrl.addTrains(trains);
+			ctrl.addLines( lines );
+			for( Train t: trains)
+				setPRandomDestiny( t);
+			ctrl.createWindow();
+		}catch (Exception ex) {
+			System.out.println("Invalid Psedo-Random Configuration.");
+		}
 	}
 	
 
