@@ -1,5 +1,7 @@
 package view;
-
+/**
+ * Frame of the Graphic User Intarface (GUI)
+ */
 import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -31,13 +33,11 @@ public class Window extends JFrame  implements ActionListener{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-this.getSize().width/2, 
 				    dim.height/2-this.getSize().height/2);
-		
 		startSimulation = new Button("Start Simulation");
 		startSimulation.addActionListener(this);
 		cv.add( startSimulation);
 		this.getContentPane().add( cv );
 		setVisible( true );
-		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -48,6 +48,5 @@ public class Window extends JFrame  implements ActionListener{
 				ctrl.startSimulation();
 			}
 		}
-		
 	}
 }

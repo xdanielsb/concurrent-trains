@@ -1,6 +1,4 @@
 package test;
-import javax.swing.JFrame;
-
 import logic.ControlRailway;
 import logic.Line;
 import model.*;
@@ -11,7 +9,8 @@ import model.*;
  * 		   SANTOS Daniel
  * 
  * Launcher of the application, simulate the behaviour 
- * of trains over a railway.
+ * of trains over a railway with three stations and 6 
+ * trains.
  */
 
 public class TestThreeStations {

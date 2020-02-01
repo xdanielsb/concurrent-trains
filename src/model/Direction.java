@@ -27,8 +27,8 @@ public class Direction {
 	public static final Direction RL = new Direction("RightLeft");
 	
 	/**
-	 * Constructor Direction, private to avoid 
-	 * invalid directions
+	 * Constructor Direction, private to avoid
+	 * creation of invalid directions
 	 * 
 	 * @param : _name of the direction
 	 */

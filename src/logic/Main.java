@@ -1,4 +1,4 @@
-package test;
+package logic;
 
 import view.MenuTest;
 /**
@@ -11,6 +11,6 @@ import view.MenuTest;
  */
 public class Main {
 	public static void main( String [] args) {
-		MenuTest a = new MenuTest();
+		MenuTest menu = new MenuTest();
 	}
 }

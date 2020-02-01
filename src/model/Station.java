@@ -2,9 +2,9 @@ package model;
 
 /**
  * Class representing a station in the railway.
- * It can store a given number of trains.
+ * This store a MAX_NUMBER_TRAIN_IN_STATION.
  * Trains usually can leave in two directions, except if the
- * station is at the start or end of the railway.
+ * station is at the start or at the end of the railway.
  * 
  * @author Daniel Santos
  * 		   Guillem Sanyas
@@ -12,6 +12,9 @@ package model;
  */
 public class Station extends ElementRail {
 
+	/**
+	 * Max Number of trains in the station
+	 */
 	public static final int MAX_NUMBER_TRAIN_IN_STATION  = 3;
 
 	/**
@@ -28,11 +31,10 @@ public class Station extends ElementRail {
 	private int numComingTrain;
 	
 	
-	
 	/**
-	 * Basic constructor for the Station.
+	 * Constructor for the Station.
 	 * 
-	 * @param _name : the name of this element.
+	 * @param _name : the name of the station.
 	 */
 	public Station(String _name) {
 		super(_name);
@@ -69,8 +71,10 @@ public class Station extends ElementRail {
 	}
 
 	/**
-	 * This method is used only for testing purposes.
-	 * Increments the number of trains in the station.
+	 * This method is used only to create the test, then
+	 * there is no need that be synchronized, since is not 
+	 * used by threads.
+	 * Increments the number of trains in the station. 
 	 * @return false if Station is full, true otherwise
 	 */
 	public boolean addTrain() {

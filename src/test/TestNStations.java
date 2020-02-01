@@ -1,4 +1,14 @@
 package test;
+/**
+ * 
+ * @author SANYAS Guillem
+ * 		   SANTOS Daniel
+ * 
+ * Launcher of the application, simulate the behaviour 
+ * of trains over a railway with n stations and n 
+ * trains, the number of trains and stations have a limit
+ * due to the size of the screen.
+ */
 
 import logic.ControlRailway;
 import logic.Line;
@@ -88,7 +98,6 @@ public class TestNStations {
 			lines[i] = l1;
 			
 		}
-		
 		Train[] trains = new Train[nTrains];
 		for( int i= 0; i < nTrains; i++) {
 			trains[i] = createTrain(i+1); 

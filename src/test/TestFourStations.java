@@ -13,7 +13,7 @@ import model.Train;
  * 		   SANTOS Daniel
  * 
  * Launcher of the application, simulate the behaviour 
- * of trains over a railway.
+ * of trains over a railway, four stations
  */
 
 public class TestFourStations {
@@ -66,8 +66,8 @@ public class TestFourStations {
 		line2.addLine( b, bc1,bc2, bc3, c);
 		
 		// Create the trains for line 2
-		Train t4 = new Train( "Train 3", line2, ctrl );
-		Train t5 = new Train( "Train 4", line2, ctrl );
+		Train t3 = new Train( "Train 3", line2, ctrl );
+		Train t4 = new Train( "Train 4", line2, ctrl );
 		
 		/**
 		 * 
@@ -87,11 +87,11 @@ public class TestFourStations {
 		line3.addLine( c, cd1,cd2, cd3, d);
 		
 		// Create the trains for line 1
-		Train t7 = new Train( "Train 5", line3, ctrl );
-		Train t8 = new Train( "Train 6", line3, ctrl );
-		Train t9 = new Train( "Train 7", line3,  ctrl);
+		Train t5 = new Train( "Train 5", line3, ctrl );
+		Train t6 = new Train( "Train 6", line3, ctrl );
+		Train t7 = new Train( "Train 7", line3,  ctrl);
 		
-		ctrl.addTrains(t1, t2, t4, t5, t7,t8,t9);
+		ctrl.addTrains(t1, t2, t3, t4, t5,t6,t7);
 		ctrl.addLines(line1, line2,line3);
 		
 		// Create the trajects
@@ -106,22 +106,22 @@ public class TestFourStations {
 		
 		//Line 2
 		
+		t3.setOrigin((Station) c);
+		t3.setDestiny((Station) b);
+		
 		t4.setOrigin((Station) c);
 		t4.setDestiny((Station) b);
 		
-		t5.setOrigin((Station) c);
-		t5.setDestiny((Station) b);
-		
 		//Line 3
 		
-		t7.setOrigin((Station) c);
-		t7.setDestiny((Station) d);
+		t5.setOrigin((Station) c);
+		t5.setDestiny((Station) d);
 		
-		t8.setOrigin((Station) d);
-		t8.setDestiny((Station) c);
+		t6.setOrigin((Station) d);
+		t6.setDestiny((Station) c);
 		
-		t9.setOrigin((Station) d);
-		t9.setDestiny((Station) c);
+		t7.setOrigin((Station) d);
+		t7.setDestiny((Station) c);
 		
 		
 		ctrl.createWindow();

@@ -1,16 +1,15 @@
 package view;
-
-import java.awt.Color;
+/**
+ * Panel in which the trains, stations and rails are 
+ * drawn
+ */
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import logic.ControlRailway;
@@ -23,6 +22,7 @@ import model.Train;
 @SuppressWarnings("serial")
 public class Canvas extends JPanel {
 	private ControlRailway ctrl;
+	// url of images
 	private final String  urlTrainl = "../assets/trainr.png";
 	private final String  urlTrainr = "../assets/train.png";
 	private final String  urlTrainStation = "../assets/train_station.png";
@@ -30,6 +30,7 @@ public class Canvas extends JPanel {
 	private final String  urlArrowRight = "../assets/arrow_right.gif";
 	private final String  urlArrowLeft = "../assets/arrow_left.gif";
 	
+	// images
 	private  BufferedImage trainRight;
 	private  BufferedImage trainLeft;
 	private  BufferedImage trainStation;
@@ -47,13 +48,17 @@ public class Canvas extends JPanel {
 			arrowRight = new ImageIcon(this.getClass().getResource(urlArrowRight)).getImage();
 			arrowLeft = new ImageIcon(this.getClass().getResource(urlArrowLeft)).getImage();
 		} catch (IOException e) {
+			System.err.println("It was not possible to read the images. checkthat you configured well the path.");
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Method that is called when there
+	 * is a change of state in a train.
+	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		
 		paintElementsRail( g );
 		paintTrains( g );
 	}
@@ -67,7 +72,10 @@ public class Canvas extends JPanel {
 				if( el instanceof Station) {
 					g.drawImage(trainStation, x, y,40,40,null);
 					g.drawString(el.toString(),x+15, y-10);
-					g.drawString(((Station) el).getNumCurrentTrainInStation()+"",x+15, y-25);
+					g.drawString(
+							((Station) el).getNumCurrentTrainInStation()+
+							"/"+Station.MAX_NUMBER_TRAIN_IN_STATION,
+							x+15, y-25);
 					
 				}else {
 					if( l.getCurrentDirection() == Direction.LR 
@@ -91,7 +99,6 @@ public class Canvas extends JPanel {
 	}
 	
 	public void paintTrains( Graphics g ) {
-		for (Line l : ctrl.getLines())
 		for( Train el: ctrl.getTrains()) {
 			if( el.getDirection() == Direction.LR) {
 				g.drawImage(trainLeft, 

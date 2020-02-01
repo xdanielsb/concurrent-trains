@@ -24,7 +24,7 @@ public class Section extends ElementRail {
 
 	/**
 	 * The section just can handle one train in t(s)
-	 * if there is a train, and another want wants to
+	 * if there is a train, and another want to
 	 * go there he has to wait.
 	 */
 	@Override
@@ -40,8 +40,8 @@ public class Section extends ElementRail {
 	}
 
 	/**
-	 * When a trains leaves the section this notify
-	 * the other that were waiting.
+	 * When a train leaves the section this notify
+	 * the other ones that were waiting.
 	 */
 	@Override
 	public synchronized void leave() {
